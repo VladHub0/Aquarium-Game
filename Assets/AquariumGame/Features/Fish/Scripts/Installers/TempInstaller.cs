@@ -21,7 +21,7 @@ namespace AquariumGame.Features.Fish.Scripts.Installers
         {
             Container.Bind<IFishFacade>()
                 .FromSubContainerResolve()
-                .ByNewPrefabInstaller<FishInstaller>(fishPrefab)
+                .ByNewContextPrefab(fishPrefab)
                 .AsSingle();
         }
     }
