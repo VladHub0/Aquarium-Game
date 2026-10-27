@@ -1,4 +1,6 @@
 
+using AquariumGame.Features.Fish.Scripts.Model;
+using AquariumGame.Features.Fish.Scripts.Model.Interface;
 using AquariumGame.Features.Fish.Scripts.Services.Facade;
 using Zenject;
 
@@ -10,6 +12,14 @@ namespace AquariumGame.Features.Fish.Scripts.Installers
         {
             Container.BindInterfacesTo<FishFacade>().AsSingle();
 
+            InstallModel();
+
+        }
+
+        private void InstallModel()
+        {
+            Container.Bind<IFishMovementModel>().To<FishMovementModel>().AsSingle();
+            Container.Bind<IFishVitalsModel>().To<FishVitalsModel>().AsSingle();
         }
     }
 }
