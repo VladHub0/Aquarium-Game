@@ -1,17 +1,22 @@
+using AquariumGame.Features.Fish.Scripts.Services.Facade.Interface;
 using Zenject;
-public class GameInit : IInitializable
+
+namespace AquariumGame.Features.Fish.Scripts.Services.Temp
 {
-
-    private readonly IFishFacade _fishFacade;
-
-    [Inject]
-    public GameInit(IFishFacade fishFacade)
+    public class GameInit : IInitializable
     {
-        _fishFacade = fishFacade;
-    }
 
-    public void Initialize()
-    {
-        _fishFacade.Init();
+        private readonly IFishFacade _fishFacade;
+
+        [Inject]
+        public GameInit(IFishFacade fishFacade)
+        {
+            _fishFacade = fishFacade;
+        }
+
+        public void Initialize()
+        {
+            _fishFacade.Init();
+        }
     }
 }

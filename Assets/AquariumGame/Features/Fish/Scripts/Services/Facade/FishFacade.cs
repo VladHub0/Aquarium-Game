@@ -1,10 +1,15 @@
 
+using AquariumGame.Features.Fish.Scripts.Services.Facade.Interface;
 using UnityEngine;
 
-public class FishFacade : IFishFacade
+
+namespace AquariumGame.Features.Fish.Scripts.Services.Facade
 {
-    public void Init()
+    public class FishFacade : IFishFacade
     {
-        Debug.Log("Hello From FishFacade");
+        public void Init()
+        {
+            Debug.Log("Hello From FishFacade");
+        }
     }
 }

@@ -1,5 +1,9 @@
 
-public interface IFishFacade
+
+namespace AquariumGame.Features.Fish.Scripts.Services.Facade.Interface
 {
-    void Init();
+    public interface IFishFacade
+    {
+        void Init();
+    }
 }

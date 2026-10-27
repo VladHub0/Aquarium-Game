@@ -1,22 +1,28 @@
 using Zenject;
 using UnityEngine;
-public class TempInstaller : MonoInstaller
+using AquariumGame.Features.Fish.Scripts.Services.Facade.Interface;
+using AquariumGame.Features.Fish.Scripts.Services.Temp;
+
+namespace AquariumGame.Features.Fish.Scripts.Installers
 {
-    [SerializeField] GameObject fishPrefab;
-    public override void InstallBindings()
+    public class TempInstaller : MonoInstaller
     {
-        
-        Container.BindInterfacesAndSelfTo<GameInit>().AsSingle();
+        [SerializeField] GameObject fishPrefab;
+        public override void InstallBindings()
+        {
 
-        FishInstaller();
-    }
+            Container.BindInterfacesAndSelfTo<GameInit>().AsSingle();
+
+            FishInstaller();
+        }
 
 
-    public void FishInstaller()
-    {
-        Container.Bind<IFishFacade>()
-            .FromSubContainerResolve()
-            .ByNewPrefabInstaller<FishInstaller>(fishPrefab)
-            .AsSingle();
+        public void FishInstaller()
+        {
+            Container.Bind<IFishFacade>()
+                .FromSubContainerResolve()
+                .ByNewPrefabInstaller<FishInstaller>(fishPrefab)
+                .AsSingle();
+        }
     }
 }
