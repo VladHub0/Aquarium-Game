@@ -5,6 +5,9 @@ namespace AquariumGame.Infrastructure.Services
         public const string PreloadLabel = "preload";
 
         public const string FishPrefab = "Fish";
+        public const string FishTangPrefab = "FishTang";
+
+        public static readonly string[] FishSpecies = { FishPrefab, FishTangPrefab };
 
         public const string MainMenuScene = "MainMenu";
         public const string GameplayScene = "FishScene";
