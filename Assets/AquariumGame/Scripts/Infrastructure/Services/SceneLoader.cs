@@ -13,8 +13,7 @@ namespace AquariumGame.Infrastructure.Services
     {
         private readonly DiContainer _container;
 
-        private AsyncOperationHandle<SceneInstance> _addressableScene;
-        private string _buildSettingsScene;
+        private AsyncOperationHandle<SceneInstance> _currentScene;
 
         public SceneLoader(DiContainer container) => _container = container;
 
@@ -22,10 +21,18 @@ namespace AquariumGame.Infrastructure.Services
         {
             await UnloadCurrent(token);
 
+            if (!await AddressablesAssetProvider.HasLocations(sceneKey, typeof(SceneInstance), token))
+            {
+                Debug.LogError($"[SceneLoader] Сцена '{sceneKey}' не найдена в Addressables.");
+                return;
+            }
+
             SceneContext.ParentContainers = new[] { _container };
             try
             {
-                await LoadSceneAsync(sceneKey, token);
+                _currentScene = Addressables.LoadSceneAsync(sceneKey, LoadSceneMode.Additive);
+                var instance = await _currentScene.ToUniTask(cancellationToken: token);
+                SceneManager.SetActiveScene(instance.Scene);
             }
             finally
             {
@@ -33,41 +40,13 @@ namespace AquariumGame.Infrastructure.Services
             }
         }
 
-        private async UniTask LoadSceneAsync(string sceneKey, CancellationToken token)
-        {
-            if (await AddressablesAssetProvider.HasLocations(sceneKey, typeof(SceneInstance), token))
-            {
-                _addressableScene = Addressables.LoadSceneAsync(sceneKey, LoadSceneMode.Additive);
-                var instance = await _addressableScene.ToUniTask(cancellationToken: token);
-                SceneManager.SetActiveScene(instance.Scene);
-                return;
-            }
-
-            if (Application.CanStreamedLevelBeLoaded(sceneKey))
-            {
-                await SceneManager.LoadSceneAsync(sceneKey, LoadSceneMode.Additive)
-                    .ToUniTask(cancellationToken: token);
-                _buildSettingsScene = sceneKey;
-                SceneManager.SetActiveScene(SceneManager.GetSceneByName(sceneKey));
-                return;
-            }
-
-            Debug.LogError($"[SceneLoader] Сцена '{sceneKey}' не найдена ни в Addressables, ни в Build Settings.");
-        }
-
         private async UniTask UnloadCurrent(CancellationToken token)
         {
-            if (_addressableScene.IsValid())
-            {
-                await Addressables.UnloadSceneAsync(_addressableScene).ToUniTask(cancellationToken: token);
-                _addressableScene = default;
-            }
+            if (!_currentScene.IsValid())
+                return;
 
-            if (!string.IsNullOrEmpty(_buildSettingsScene))
-            {
-                await SceneManager.UnloadSceneAsync(_buildSettingsScene).ToUniTask(cancellationToken: token);
-                _buildSettingsScene = null;
-            }
+            await Addressables.UnloadSceneAsync(_currentScene).ToUniTask(cancellationToken: token);
+            _currentScene = default;
         }
     }
 }
