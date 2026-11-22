@@ -6,6 +6,15 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/AquariumGame/Scenes/Bootstrap.unity
+    guid: 660276f0754c49e0a4cbdbf75e29cc1e
+  - enabled: 1
+    path: Assets/AquariumGame/Scenes/MainMenu.unity
+    guid: 0fdad4b9d91f4e71a993416f8e38c53c
+  - enabled: 1
+    path: Assets/AquariumGame/Features/Fish/Scene/FishScene.unity
+    guid: 39cdf6385aafc5240af90a11ae9bae0a
+  - enabled: 1
     path: Assets/AquariumGame/Scenes/SampleScene.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
   m_configObjects:
