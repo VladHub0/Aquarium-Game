@@ -6,6 +6,8 @@ namespace AquariumGame.Features.Fish.Scripts.Configs.Interface
     {
         float Speed { get; }
 
+        float WaypointReachDistance { get; }
+
        
         float Health { get; }
 
