@@ -5,9 +5,6 @@ using Cysharp.Threading.Tasks;
 
 namespace AquariumGame.Infrastructure.States
 {
-    /// <summary>
-    /// 4. Главное меню: грузит сцену и ждёт, пока игрок нажмёт Play.
-    /// </summary>
     public sealed class MainMenuState : StateBase
     {
         private readonly ISceneLoader _sceneLoader;

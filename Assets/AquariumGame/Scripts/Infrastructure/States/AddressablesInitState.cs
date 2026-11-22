@@ -7,9 +7,6 @@ using UnityEngine;
 
 namespace AquariumGame.Infrastructure.States
 {
-    /// <summary>
-    /// 2. Инициализация Addressables и обновление каталога.
-    /// </summary>
     public sealed class AddressablesInitState : StateBase
     {
         private readonly IAssetProvider _assets;
@@ -26,7 +23,6 @@ namespace AquariumGame.Infrastructure.States
             }
             catch (Exception e) when (e is not OperationCanceledException)
             {
-                // Нет сети или удалённого каталога — продолжаем с локальным
                 Debug.LogWarning($"[AddressablesInit] Не удалось обновить каталог: {e.Message}");
             }
 

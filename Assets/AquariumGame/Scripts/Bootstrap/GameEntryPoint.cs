@@ -8,10 +8,6 @@ using Zenject;
 
 namespace AquariumGame.Bootstrap
 {
-    /// <summary>
-    /// Точка входа игры. Zenject вызывает Initialize() после сборки контейнера
-    /// в Bootstrap-сцене, и мы запускаем глобальную state machine.
-    /// </summary>
     public sealed class GameEntryPoint : IInitializable, IDisposable
     {
         private readonly IGameStateMachine _stateMachine;
@@ -29,7 +25,6 @@ namespace AquariumGame.Bootstrap
             }
             catch (OperationCanceledException)
             {
-                // Нормальное завершение при выходе из игры
             }
             catch (Exception e)
             {

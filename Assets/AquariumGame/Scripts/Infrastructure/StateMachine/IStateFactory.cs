@@ -8,10 +8,6 @@ namespace AquariumGame.Infrastructure.StateMachine
         IState Create(Type stateType);
     }
 
-    /// <summary>
-    /// Создаёт новый экземпляр состояния на каждый вход и внедряет зависимости через Zenject.
-    /// Состояния не нужно регистрировать в контейнере вручную.
-    /// </summary>
     public sealed class StateFactory : IStateFactory
     {
         private readonly DiContainer _container;

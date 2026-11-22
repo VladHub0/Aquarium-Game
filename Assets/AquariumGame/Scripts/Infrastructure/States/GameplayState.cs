@@ -7,9 +7,6 @@ using UnityEngine;
 
 namespace AquariumGame.Infrastructure.States
 {
-    /// <summary>
-    /// 5. Аквариум: грузит игровую сцену и ждёт выхода в меню.
-    /// </summary>
     public sealed class GameplayState : StateBase
     {
         private readonly ISceneLoader _sceneLoader;

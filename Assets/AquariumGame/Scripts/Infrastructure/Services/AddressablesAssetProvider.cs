@@ -9,10 +9,6 @@ using Object = UnityEngine.Object;
 
 namespace AquariumGame.Infrastructure.Services
 {
-    /// <summary>
-    /// Обёртка над Addressables: инициализация, обновление каталога,
-    /// предзагрузка по лейблу и кеш загруженных ассетов.
-    /// </summary>
     public sealed class AddressablesAssetProvider : IAssetProvider, IDisposable
     {
         private readonly Dictionary<string, AsyncOperationHandle> _cache = new();

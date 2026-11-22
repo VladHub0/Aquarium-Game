@@ -6,10 +6,6 @@ using UnityEngine;
 
 namespace AquariumGame.Infrastructure.StateMachine
 {
-    /// <summary>
-    /// Базовый класс состояния. Обязателен только Execute.
-    /// Всё, что добавлено в Disposables, освобождается автоматически после Exit.
-    /// </summary>
     public abstract class StateBase : IState, IDisposable
     {
         private readonly List<IDisposable> _disposables = new();
@@ -23,7 +19,6 @@ namespace AquariumGame.Infrastructure.StateMachine
 
         public void Dispose()
         {
-            // Освобождаем в обратном порядке; ошибка одного не мешает остальным
             for (var i = _disposables.Count - 1; i >= 0; i--)
             {
                 try { _disposables[i].Dispose(); }
@@ -44,9 +39,6 @@ namespace AquariumGame.Infrastructure.StateMachine
         }
     }
 
-    /// <summary>
-    /// Базовый класс состояния с данными (payload) от предыдущего состояния.
-    /// </summary>
     public abstract class StateBase<TPayload> : StateBase, IPayloadState<TPayload>
     {
         protected TPayload Payload { get; private set; }

@@ -5,9 +5,6 @@ using Zenject;
 
 namespace AquariumGame.Bootstrap
 {
-    /// <summary>
-    /// Installer для SceneContext в Bootstrap-сцене.
-    /// </summary>
     public sealed class BootstrapInstaller : MonoInstaller
     {
         public override void InstallBindings()
@@ -28,7 +25,6 @@ namespace AquariumGame.Bootstrap
 
         private void BindStateMachine()
         {
-            // Состояния не биндятся: StateFactory создаёт их через Container.Instantiate
             Container.Bind<IStateFactory>().To<StateFactory>().AsSingle();
             Container.Bind<IGameStateMachine>().To<GameStateMachine>().AsSingle();
         }

@@ -11,17 +11,12 @@ namespace AquariumGame.Infrastructure.StateMachine
         bool IsRunning { get; }
         event Action<IState> StateChanged;
 
-        /// <summary>Запускает машину с начального состояния и ждёт, пока она не завершится.</summary>
         UniTask Run<TState>(CancellationToken token) where TState : class, IState;
 
         UniTask Run<TState, TPayload>(TPayload payload, CancellationToken token)
             where TState : class, IPayloadState<TPayload>;
     }
 
-    /// <summary>
-    /// Простая асинхронная state machine по мотивам UniState:
-    /// каждое состояние само решает, куда идти дальше, возвращая StateTransition.
-    /// </summary>
     public sealed class GameStateMachine : IGameStateMachine
     {
         private readonly IStateFactory _stateFactory;
@@ -78,7 +73,6 @@ namespace AquariumGame.Infrastructure.StateMachine
 
         private static async UniTask ExitState(IState state)
         {
-            // Exit вызывается всегда, даже при отмене или ошибке, чтобы освободить ресурсы
             try
             {
                 await state.Exit(CancellationToken.None);

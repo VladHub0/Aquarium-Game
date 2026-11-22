@@ -3,10 +3,6 @@ using Cysharp.Threading.Tasks;
 
 namespace AquariumGame.Infrastructure.Services
 {
-    /// <summary>
-    /// Сигналы от UI к глобальной state machine.
-    /// Например, кнопка Play вызывает RequestStartGame(), а MainMenuState ждёт этого сигнала.
-    /// </summary>
     public interface IGameFlowService
     {
         void RequestStartGame();

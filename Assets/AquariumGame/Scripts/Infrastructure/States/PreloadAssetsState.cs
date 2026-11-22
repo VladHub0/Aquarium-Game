@@ -5,9 +5,6 @@ using Cysharp.Threading.Tasks;
 
 namespace AquariumGame.Infrastructure.States
 {
-    /// <summary>
-    /// 3. Предзагрузка ассетов с лейблом "preload" (рыбки, UI, конфиги).
-    /// </summary>
     public sealed class PreloadAssetsState : StateBase
     {
         private readonly IAssetProvider _assets;

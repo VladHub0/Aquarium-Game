@@ -9,10 +9,6 @@ using Zenject;
 
 namespace AquariumGame.Infrastructure.Services
 {
-    /// <summary>
-    /// Загружает сцены аддитивно, чтобы Bootstrap-сцена (и её SceneContext) оставалась жива.
-    /// Сначала ищет сцену в Addressables, иначе берёт её из Build Settings.
-    /// </summary>
     public sealed class SceneLoader : ISceneLoader
     {
         private readonly DiContainer _container;
