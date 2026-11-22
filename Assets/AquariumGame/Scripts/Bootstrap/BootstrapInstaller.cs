@@ -1,3 +1,4 @@
+using AquariumGame.Features.Fish.Scripts.Services.Spawner;
 using AquariumGame.Infrastructure.Services;
 using AquariumGame.Infrastructure.StateMachine;
 using Zenject;
@@ -13,6 +14,7 @@ namespace AquariumGame.Bootstrap
         {
             BindServices();
             BindStateMachine();
+            BindGameplay();
 
             Container.BindInterfacesTo<GameEntryPoint>().AsSingle().NonLazy();
         }
@@ -29,6 +31,12 @@ namespace AquariumGame.Bootstrap
             // Состояния не биндятся: StateFactory создаёт их через Container.Instantiate
             Container.Bind<IStateFactory>().To<StateFactory>().AsSingle();
             Container.Bind<IGameStateMachine>().To<GameStateMachine>().AsSingle();
+        }
+
+        private void BindGameplay()
+        {
+            // Спаунер живёт в Bootstrap: GameplayState создаёт рыб после аддитивной загрузки FishScene
+            Container.BindInterfacesTo<FishSpawner>().AsSingle();
         }
     }
 }
