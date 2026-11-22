@@ -1,3 +1,4 @@
+using System;
 using AquariumGame.Features.Fish.Scripts.Configs.Interface;
 using AquariumGame.Features.Fish.Scripts.Model.Interface;
 using AquariumGame.Features.Fish.Scripts.Services.Waypoints.Interface;
@@ -7,7 +8,7 @@ using Zenject;
 
 namespace AquariumGame.Features.Fish.Scripts.Presenter
 {
-    public sealed class FishMovementPresenter : ITickable
+    public sealed class FishMovementPresenter : ITickable, IDisposable
     {
         private readonly IFishView _view;
         private readonly IFishMovementModel _model;
@@ -35,16 +36,18 @@ namespace AquariumGame.Features.Fish.Scripts.Presenter
             var target = _model.Target;
             var next = Vector3.MoveTowards(position, target, _model.Speed * Time.deltaTime);
 
-            _view.LookTo(target.x - position.x);
+            _view.LookTo(target - position);
             _view.Position = next;
 
             if (Vector3.Distance(next, target) <= _config.WaypointReachDistance)
                 TrySelectNextTarget();
         }
 
+        public void Dispose() => _waypoints.Release(this);
+
         private bool TrySelectNextTarget()
         {
-            if (!_waypoints.TryGetRandomPoint(_model.HasTarget ? _model.Target : _view.Position, out var point))
+            if (!_waypoints.TryReservePoint(this, _view.Position, out var point))
             {
                 _model.HasTarget = false;
                 return false;
