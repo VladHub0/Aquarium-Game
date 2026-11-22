@@ -1,5 +1,5 @@
 
-namespace AquariumGame.Features.Fish.Scripts.Model
+namespace AquariumGame.Features.Fish.Scripts.Model.Interface
 {
     public interface IFishVitalsModel
     {

@@ -1,5 +1,6 @@
 
 using AquariumGame.Features.Fish.Scripts.Configs.Interface;
+using AquariumGame.Features.Fish.Scripts.Model.Interface;
 using Zenject;
 
 namespace AquariumGame.Features.Fish.Scripts.Model

@@ -8,6 +8,7 @@ namespace AquariumGame.Infrastructure.Services
 
         // Адреса сцен в Addressables (или имена сцен в Build Settings)
         public const string MainMenuScene = "MainMenu";
-        public const string GameplayScene = "Gameplay";
+        // Игровая сцена аквариума — пока это сцена фичи рыб
+        public const string GameplayScene = "FishScene";
     }
 }

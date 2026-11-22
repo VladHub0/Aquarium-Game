@@ -5,22 +5,44 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.ResourceManagement.ResourceProviders;
 using UnityEngine.SceneManagement;
+using Zenject;
 
 namespace AquariumGame.Infrastructure.Services
 {
     /// <summary>
     /// Загружает сцены аддитивно, чтобы Bootstrap-сцена (и её SceneContext) оставалась жива.
     /// Сначала ищет сцену в Addressables, иначе берёт её из Build Settings.
+    /// SceneContext загружаемой сцены становится дочерним контейнером Bootstrap,
+    /// поэтому сцены фич (меню, аквариум) получают глобальные сервисы через DI.
     /// </summary>
     public sealed class SceneLoader : ISceneLoader
     {
+        private readonly DiContainer _container;
+
         private AsyncOperationHandle<SceneInstance> _addressableScene;
         private string _buildSettingsScene;
+
+        public SceneLoader(DiContainer container) => _container = container;
 
         public async UniTask LoadAsync(string sceneKey, CancellationToken token)
         {
             await UnloadCurrent(token);
 
+            // Так же делает ZenjectSceneLoader: SceneContext новой сцены заберёт этот контейнер как родителя
+            SceneContext.ParentContainers = new[] { _container };
+            try
+            {
+                await LoadSceneAsync(sceneKey, token);
+            }
+            finally
+            {
+                // Если в сцене не было SceneContext, не оставляем ссылку для следующей загрузки
+                SceneContext.ParentContainers = null;
+            }
+        }
+
+        private async UniTask LoadSceneAsync(string sceneKey, CancellationToken token)
+        {
             if (await AddressablesAssetProvider.HasLocations(sceneKey, typeof(SceneInstance), token))
             {
                 _addressableScene = Addressables.LoadSceneAsync(sceneKey, LoadSceneMode.Additive);
