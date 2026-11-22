@@ -23,11 +23,11 @@ namespace AquariumGame.Features.Fish.Scripts.Services.Spawner
             _assets = assets;
         }
 
-        public async UniTask<IFishFacade> SpawnAsync(Vector3 position, CancellationToken token)
+        public async UniTask<IFishFacade> SpawnAsync(string key, Vector3 position, CancellationToken token)
         {
-            var prefab = await _assets.LoadAsync<GameObject>(AssetKeys.FishPrefab, token);
+            var prefab = await _assets.LoadAsync<GameObject>(key, token);
             if (prefab == null)
-                throw new InvalidOperationException($"[FishSpawner] Префаб рыбы '{AssetKeys.FishPrefab}' не загружен.");
+                throw new InvalidOperationException($"[FishSpawner] Префаб рыбы '{key}' не загружен.");
 
             token.ThrowIfCancellationRequested();
 
