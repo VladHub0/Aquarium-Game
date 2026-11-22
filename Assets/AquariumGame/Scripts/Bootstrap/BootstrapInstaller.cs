@@ -1,4 +1,5 @@
 using AquariumGame.Features.Fish.Scripts.Services.Spawner;
+using AquariumGame.Features.Fish.Scripts.Services.Waypoints;
 using AquariumGame.Infrastructure.Services;
 using AquariumGame.Infrastructure.StateMachine;
 using Zenject;
@@ -32,6 +33,7 @@ namespace AquariumGame.Bootstrap
         private void BindGameplay()
         {
             Container.BindInterfacesTo<FishSpawner>().AsSingle();
+            Container.BindInterfacesTo<FishWaypointsService>().AsSingle();
         }
     }
 }

@@ -10,6 +10,7 @@ namespace AquariumGame.Features.Fish.Scripts.Configs
 
         [Header("Movement")]
         [SerializeField, Min(0f)] private float speed = 1f;
+        [SerializeField, Min(0.001f)] private float waypointReachDistance = 0.05f;
 
         [Header("Health")]
         [SerializeField, Min(0f)] private float health = 100f;
@@ -18,6 +19,7 @@ namespace AquariumGame.Features.Fish.Scripts.Configs
 
 
         public float Speed { get => speed; }
+        public float WaypointReachDistance { get => waypointReachDistance; }
         public float Health { get => health; }
 
         public float Saturation { get => saturation; }
