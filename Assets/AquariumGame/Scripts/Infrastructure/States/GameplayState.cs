@@ -1,48 +1,49 @@
 using System.Threading;
-using AquariumGame.Features.Fish.Scripts.Services.Spawner.Interface;
-using AquariumGame.Features.Fish.Scripts.Services.Waypoints.Interface;
 using AquariumGame.Infrastructure.Services;
 using AquariumGame.Infrastructure.StateMachine;
 using Cysharp.Threading.Tasks;
-using UnityEngine;
 
 namespace AquariumGame.Infrastructure.States
 {
     public sealed class GameplayState : StateBase
     {
-        private readonly ISceneLoader _sceneLoader;
+        private readonly IGameplaySession _session;
         private readonly IGameFlowService _gameFlow;
-        private readonly IFishSpawner _fishSpawner;
-        private readonly IFishWaypointsService _waypoints;
 
-        public GameplayState(
-            ISceneLoader sceneLoader,
-            IGameFlowService gameFlow,
-            IFishSpawner fishSpawner,
-            IFishWaypointsService waypoints)
+        private bool _goingToPause;
+
+        public GameplayState(IGameplaySession session, IGameFlowService gameFlow)
         {
-            _sceneLoader = sceneLoader;
+            _session = session;
             _gameFlow = gameFlow;
-            _fishSpawner = fishSpawner;
-            _waypoints = waypoints;
         }
 
-        public override async UniTask Enter(CancellationToken token)
-        {
-            await _sceneLoader.LoadAsync(AssetKeys.GameplayScene, token);
-            _waypoints.TryGetRandomPoint(Vector3.zero, out var spawnPoint);
-            await _fishSpawner.SpawnAsync(spawnPoint, token);
-        }
+        public override UniTask Enter(CancellationToken token) => _session.StartAsync(token);
 
         public override async UniTask<StateTransition> Execute(CancellationToken token)
         {
-            await _gameFlow.WaitForMainMenuAsync(token);
+            using var cts = CancellationTokenSource.CreateLinkedTokenSource(token);
+
+            var index = await UniTask.WhenAny(
+                _gameFlow.WaitForTogglePauseAsync(cts.Token),
+                _gameFlow.WaitForMainMenuAsync(cts.Token));
+
+            cts.Cancel();
+
+            if (index == 0)
+            {
+                _goingToPause = true;
+                return Transition.GoTo<PauseState>();
+            }
+
             return Transition.GoTo<MainMenuState>();
         }
 
         public override UniTask Exit(CancellationToken token)
         {
-            _fishSpawner.DespawnAll();
+            if (!_goingToPause)
+                _session.End();
+
             return UniTask.CompletedTask;
         }
     }

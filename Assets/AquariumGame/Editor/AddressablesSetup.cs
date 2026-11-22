@@ -16,6 +16,7 @@ namespace AquariumGame.Editor
             new AddressableEntry("Assets/AquariumGame/Features/Fish/Prefabs/Fish.prefab", AssetKeys.FishPrefab, AssetKeys.PreloadLabel),
             new AddressableEntry("Assets/AquariumGame/Scenes/MainMenu.unity", AssetKeys.MainMenuScene, null),
             new AddressableEntry("Assets/AquariumGame/Features/Fish/Scene/FishScene.unity", AssetKeys.GameplayScene, null),
+            new AddressableEntry("Assets/AquariumGame/Scenes/Pause.unity", AssetKeys.PauseScene, null),
         };
 
         static AddressablesSetup()
@@ -59,7 +60,7 @@ namespace AquariumGame.Editor
             settings.SetDirty(AddressableAssetSettings.ModificationEvent.BatchModification, null, true, true);
             AssetDatabase.SaveAssets();
 
-            Debug.Log("[AddressablesSetup] Addressables настроены: префаб рыбы и сцены MainMenu, FishScene.");
+            Debug.Log("[AddressablesSetup] Addressables настроены: префаб рыбы и сцены MainMenu, FishScene, Pause.");
         }
 
         private static bool EnsureEntry(AddressableAssetSettings settings, AddressableEntry data)
