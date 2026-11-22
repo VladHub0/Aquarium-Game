@@ -9,6 +9,8 @@ namespace AquariumGame.Infrastructure.Services
 
         UniTask StartAsync(CancellationToken token);
 
+        UniTask SpawnFishAsync(string speciesKey, CancellationToken token);
+
         void End();
     }
 }

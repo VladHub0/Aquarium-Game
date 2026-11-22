@@ -15,6 +15,7 @@ namespace AquariumGame.Editor
         {
             new AddressableEntry("Assets/AquariumGame/Features/Fish/Prefabs/Fish.prefab", AssetKeys.FishPrefab, AssetKeys.PreloadLabel),
             new AddressableEntry("Assets/AquariumGame/Features/Fish/Prefabs/FishTang.prefab", AssetKeys.FishTangPrefab, AssetKeys.PreloadLabel),
+            new AddressableEntry("Assets/AquariumGame/Features/Fish/Prefabs/FishGramma.prefab", AssetKeys.FishGrammaPrefab, AssetKeys.PreloadLabel),
             new AddressableEntry("Assets/AquariumGame/Scenes/MainMenu.unity", AssetKeys.MainMenuScene, null),
             new AddressableEntry("Assets/AquariumGame/Features/Fish/Scene/FishScene.unity", AssetKeys.GameplayScene, null),
             new AddressableEntry("Assets/AquariumGame/Scenes/Pause.unity", AssetKeys.PauseScene, null),
