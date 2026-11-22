@@ -21,6 +21,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - preload
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 562bc53b604b4c99ac159b7a280295d5
+    m_Address: FishTang
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - preload
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 0fdad4b9d91f4e71a993416f8e38c53c
     m_Address: MainMenu
     m_ReadOnly: 0
