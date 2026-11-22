@@ -12,8 +12,6 @@ namespace AquariumGame.Infrastructure.Services
     /// <summary>
     /// Загружает сцены аддитивно, чтобы Bootstrap-сцена (и её SceneContext) оставалась жива.
     /// Сначала ищет сцену в Addressables, иначе берёт её из Build Settings.
-    /// SceneContext загружаемой сцены становится дочерним контейнером Bootstrap,
-    /// поэтому сцены фич (меню, аквариум) получают глобальные сервисы через DI.
     /// </summary>
     public sealed class SceneLoader : ISceneLoader
     {
@@ -28,7 +26,6 @@ namespace AquariumGame.Infrastructure.Services
         {
             await UnloadCurrent(token);
 
-            // Так же делает ZenjectSceneLoader: SceneContext новой сцены заберёт этот контейнер как родителя
             SceneContext.ParentContainers = new[] { _container };
             try
             {
@@ -36,7 +33,6 @@ namespace AquariumGame.Infrastructure.Services
             }
             finally
             {
-                // Если в сцене не было SceneContext, не оставляем ссылку для следующей загрузки
                 SceneContext.ParentContainers = null;
             }
         }

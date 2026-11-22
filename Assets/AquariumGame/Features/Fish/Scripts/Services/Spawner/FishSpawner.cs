@@ -11,12 +11,6 @@ using Object = UnityEngine.Object;
 
 namespace AquariumGame.Features.Fish.Scripts.Services.Spawner
 {
-    /// <summary>
-    /// Создаёт рыб из префаба, загруженного через IAssetProvider (Addressables).
-    /// Префаб содержит GameObjectContext с FishSoInstaller, поэтому каждая рыба
-    /// получает свой подконтейнер, дочерний к контейнеру Bootstrap.
-    /// Владение ассетом: handle префаба хранит IAssetProvider, спаунер владеет только экземплярами.
-    /// </summary>
     public sealed class FishSpawner : IFishSpawner, IDisposable
     {
         private readonly DiContainer _container;
@@ -37,7 +31,6 @@ namespace AquariumGame.Features.Fish.Scripts.Services.Spawner
 
             token.ThrowIfCancellationRequested();
 
-            // Экземпляр попадает в активную сцену — её выставляет SceneLoader (FishScene)
             var instance = _container.InstantiatePrefab(prefab, position, Quaternion.identity, null);
             _spawned.Add(instance);
 

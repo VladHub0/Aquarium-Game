@@ -8,8 +8,7 @@ using UnityEngine;
 namespace AquariumGame.Infrastructure.States
 {
     /// <summary>
-    /// 5. Аквариум: аддитивно грузит игровую сцену поверх Bootstrap,
-    /// создаёт рыбку через спаунер и ждёт выхода в меню.
+    /// 5. Аквариум: грузит игровую сцену и ждёт выхода в меню.
     /// </summary>
     public sealed class GameplayState : StateBase
     {
@@ -38,7 +37,6 @@ namespace AquariumGame.Infrastructure.States
 
         public override UniTask Exit(CancellationToken token)
         {
-            // Рыбы живут в игровой сцене; убираем их явно, не дожидаясь выгрузки сцены
             _fishSpawner.DespawnAll();
             return UniTask.CompletedTask;
         }

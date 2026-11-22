@@ -6,11 +6,6 @@ using UnityEngine;
 
 namespace AquariumGame.Editor
 {
-    /// <summary>
-    /// Создаёт настройки Addressables (если их нет) и регистрирует префаб рыбы
-    /// с адресом AssetKeys.FishPrefab и лейблом AssetKeys.PreloadLabel.
-    /// Запускается автоматически при открытии проекта и через меню Aquarium/Setup Addressables.
-    /// </summary>
     [InitializeOnLoad]
     public static class AddressablesSetup
     {

@@ -35,7 +35,6 @@ namespace AquariumGame.Bootstrap
 
         private void BindGameplay()
         {
-            // Спаунер живёт в Bootstrap: GameplayState создаёт рыб после аддитивной загрузки FishScene
             Container.BindInterfacesTo<FishSpawner>().AsSingle();
         }
     }

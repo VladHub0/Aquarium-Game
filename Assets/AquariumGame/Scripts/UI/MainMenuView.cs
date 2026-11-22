@@ -7,11 +7,6 @@ using Zenject;
 
 namespace AquariumGame.UI
 {
-    /// <summary>
-    /// Простое главное меню прототипа: кнопка Play отправляет сигнал в IGameFlowService,
-    /// а MainMenuState переводит игру в GameplayState.
-    /// UI собирается кодом, чтобы сцена не зависела от ручной вёрстки; позже его можно заменить префабом.
-    /// </summary>
     public sealed class MainMenuView : MonoBehaviour
     {
         [SerializeField] private string playLabel = "Play";
