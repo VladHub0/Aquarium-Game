@@ -14,25 +14,47 @@ namespace AquariumGame.Infrastructure.Services
         private readonly DiContainer _container;
 
         private AsyncOperationHandle<SceneInstance> _currentScene;
+        private AsyncOperationHandle<SceneInstance> _overlayScene;
 
         public SceneLoader(DiContainer container) => _container = container;
 
         public async UniTask LoadAsync(string sceneKey, CancellationToken token)
         {
-            await UnloadCurrent(token);
+            await UnloadOverlayAsync(token);
+            await Unload(_currentScene, token);
+            _currentScene = default;
 
+            _currentScene = await LoadAdditive(sceneKey, token);
+            if (_currentScene.IsValid())
+                SceneManager.SetActiveScene(_currentScene.Result.Scene);
+        }
+
+        public async UniTask LoadOverlayAsync(string sceneKey, CancellationToken token)
+        {
+            await UnloadOverlayAsync(token);
+            _overlayScene = await LoadAdditive(sceneKey, token);
+        }
+
+        public async UniTask UnloadOverlayAsync(CancellationToken token)
+        {
+            await Unload(_overlayScene, token);
+            _overlayScene = default;
+        }
+
+        private async UniTask<AsyncOperationHandle<SceneInstance>> LoadAdditive(string sceneKey, CancellationToken token)
+        {
             if (!await AddressablesAssetProvider.HasLocations(sceneKey, typeof(SceneInstance), token))
             {
                 Debug.LogError($"[SceneLoader] Сцена '{sceneKey}' не найдена в Addressables.");
-                return;
+                return default;
             }
 
             SceneContext.ParentContainers = new[] { _container };
             try
             {
-                _currentScene = Addressables.LoadSceneAsync(sceneKey, LoadSceneMode.Additive);
-                var instance = await _currentScene.ToUniTask(cancellationToken: token);
-                SceneManager.SetActiveScene(instance.Scene);
+                var handle = Addressables.LoadSceneAsync(sceneKey, LoadSceneMode.Additive);
+                await handle.ToUniTask(cancellationToken: token);
+                return handle;
             }
             finally
             {
@@ -40,13 +62,12 @@ namespace AquariumGame.Infrastructure.Services
             }
         }
 
-        private async UniTask UnloadCurrent(CancellationToken token)
+        private static async UniTask Unload(AsyncOperationHandle<SceneInstance> handle, CancellationToken token)
         {
-            if (!_currentScene.IsValid())
+            if (!handle.IsValid())
                 return;
 
-            await Addressables.UnloadSceneAsync(_currentScene).ToUniTask(cancellationToken: token);
-            _currentScene = default;
+            await Addressables.UnloadSceneAsync(handle).ToUniTask(cancellationToken: token);
         }
     }
 }

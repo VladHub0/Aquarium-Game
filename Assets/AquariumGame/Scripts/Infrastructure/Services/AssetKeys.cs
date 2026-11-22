@@ -8,5 +8,6 @@ namespace AquariumGame.Infrastructure.Services
 
         public const string MainMenuScene = "MainMenu";
         public const string GameplayScene = "FishScene";
+        public const string PauseScene = "Pause";
     }
 }
