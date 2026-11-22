@@ -23,6 +23,7 @@ namespace AquariumGame.Bootstrap
             Container.BindInterfacesTo<SceneLoader>().AsSingle();
             Container.BindInterfacesTo<GameFlowService>().AsSingle();
             Container.BindInterfacesTo<PauseInputService>().AsSingle();
+            Container.BindInterfacesTo<WalletService>().AsSingle();
         }
 
         private void BindStateMachine()
@@ -36,6 +37,7 @@ namespace AquariumGame.Bootstrap
             Container.BindInterfacesTo<FishSpawner>().AsSingle();
             Container.BindInterfacesTo<FishWaypointsService>().AsSingle();
             Container.BindInterfacesTo<GameplaySession>().AsSingle();
+            Container.BindInterfacesTo<FishShop>().AsSingle();
         }
     }
 }
