@@ -1,4 +1,3 @@
-
 using AquariumGame.Features.Fish.Scripts.Model;
 using AquariumGame.Features.Fish.Scripts.Model.Interface;
 using AquariumGame.Features.Fish.Scripts.Presenter;
@@ -25,7 +24,6 @@ namespace AquariumGame.Features.Fish.Scripts.Installers
         private void InstallModel()
         {
             Container.Bind<IFishMovementModel>().To<FishMovementModel>().AsSingle();
-            Container.Bind<IFishVitalsModel>().To<FishVitalsModel>().AsSingle();
         }
 
         private void InstallView()

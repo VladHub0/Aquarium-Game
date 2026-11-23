@@ -16,4 +16,11 @@ MonoBehaviour:
   waypointReachDistance: 0.05
   health: 120
   saturation: 100
-  saturationTick: 0.04
+  saturationTick: 2
+  starvationDamage: 3
+  regeneration: 2
+  hungryThreshold: 0.4
+  fullThreshold: 0.9
+  seekSpeedMultiplier: 1.8
+  deadFloatSpeed: 0.25
+  deadRemoveDelay: 3

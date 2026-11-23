@@ -1,5 +1,3 @@
-
-
 namespace AquariumGame.Features.Fish.Scripts.Configs.Interface
 {
     public interface IFishConfig
@@ -7,12 +5,5 @@ namespace AquariumGame.Features.Fish.Scripts.Configs.Interface
         float Speed { get; }
 
         float WaypointReachDistance { get; }
-
-       
-        float Health { get; }
-
-        float Saturation { get; }
-
-        float SaturationTick { get; }
     }
 }

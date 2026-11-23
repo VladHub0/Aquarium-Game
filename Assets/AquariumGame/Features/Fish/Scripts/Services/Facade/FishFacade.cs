@@ -1,48 +1,72 @@
-
-using AquariumGame.Features.Fish.Scripts.Configs.Interface;
-using AquariumGame.Features.Fish.Scripts.Model.Interface;
 using AquariumGame.Features.Fish.Scripts.Presenter.Interface;
 using AquariumGame.Features.Fish.Scripts.Services.Facade.Interface;
+using AquariumGame.Features.Fish.Scripts.View.Interface;
+using AquariumGame.Features.FishBehaviour.Scripts.Core.Interface;
+using AquariumGame.Features.FishBehaviour.Scripts.States;
+using AquariumGame.Features.FishVitals.Scripts.Model.Interface;
+using AquariumGame.Features.FishVitals.Scripts.Presenter.Interface;
+using AquariumGame.Features.FishVitals.Scripts.Services.Interface;
 using UnityEngine;
-using Zenject;
-
 
 namespace AquariumGame.Features.Fish.Scripts.Services.Facade
 {
-    public class FishFacade : IFishFacade
+    public sealed class FishFacade : IFishFacade
     {
-        private readonly IFishConfig _fishConfig;
+        private readonly IFishView _view;
+        private readonly IFishMovementPresenter _movement;
+        private readonly IFishVitalsModel _vitals;
+        private readonly IFishVitalsService _vitalsService;
+        private readonly IFishVitalsPresenter _vitalsPresenter;
+        private readonly IFishStateMachine _stateMachine;
 
-        private readonly IFishVitalsModel _fishVitalsModel;
-        private readonly IFishMovementModel _fishMovementModel;
-        private readonly IFishMovementPresenter _fishMovementPresenter;
+        private bool _disposed;
 
-        [Inject]
-        public  FishFacade(
-            IFishConfig fishConfig,
-            IFishMovementModel fishMovementModel,
-            IFishVitalsModel fishVitalsModel,
-            IFishMovementPresenter fishMovementPresenter)
+        public FishFacade(
+            IFishView view,
+            IFishMovementPresenter movement,
+            IFishVitalsModel vitals,
+            IFishVitalsService vitalsService,
+            IFishVitalsPresenter vitalsPresenter,
+            IFishStateMachine stateMachine)
         {
-            _fishConfig = fishConfig;
-            _fishMovementModel = fishMovementModel;
-            _fishVitalsModel = fishVitalsModel;
-            _fishMovementPresenter = fishMovementPresenter;
+            _view = view;
+            _movement = movement;
+            _vitals = vitals;
+            _vitalsService = vitalsService;
+            _vitalsPresenter = vitalsPresenter;
+            _stateMachine = stateMachine;
         }
+
+        public bool IsAlive => !_disposed && !_vitals.IsDead;
+
         public void Init()
         {
-            Debug.Log("Hello From FishFacade");
-
-            Debug.Log("Fish Config + " + _fishConfig.Speed);
-
-            Debug.Log("Fish Movement Model + " + _fishMovementModel.Speed);
-
-            Debug.Log("Fish Vital Model + " + _fishVitalsModel.Health);
-
+            _vitalsPresenter.Init();
+            _stateMachine.Enter<FishSwimState>();
         }
 
-        public void Tick(float deltaTime) => _fishMovementPresenter.Tick(deltaTime);
+        public void Tick(float deltaTime)
+        {
+            if (_disposed)
+                return;
 
-        public void Dispose() => _fishMovementPresenter.Dispose();
+            _vitalsService.Tick(deltaTime);
+            _stateMachine.Tick(deltaTime);
+        }
+
+        public bool ContainsPoint(Vector2 worldPoint) => !_disposed && _view.ContainsPoint(worldPoint);
+
+        public void Tap() => _view.PlayTapFeedback();
+
+        public void Dispose()
+        {
+            if (_disposed)
+                return;
+
+            _disposed = true;
+            _stateMachine.Dispose();
+            _movement.Dispose();
+            _vitalsPresenter.Dispose();
+        }
     }
 }

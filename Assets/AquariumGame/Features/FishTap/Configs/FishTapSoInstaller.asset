@@ -1,0 +1,15 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d8db93c494a4ba7b73d8d88a6e8f440, type: 3}
+  m_Name: FishTapSoInstaller
+  m_EditorClassIdentifier: Assembly-CSharp::AquariumGame.Features.FishTap.Scripts.Installers.FishTapSoInstaller
+  _fishTapConfig: {fileID: 11400000, guid: e3271089746b4d20ac17cb798b77f207, type: 2}

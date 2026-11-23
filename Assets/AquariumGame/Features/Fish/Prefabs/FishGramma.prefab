@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1073273212}
   - component: {fileID: 1073273213}
   - component: {fileID: 1073273214}
+  - component: {fileID: 1073273215}
   m_Layer: 0
   m_Name: FishGramma
   m_TagString: Untagged
@@ -148,3 +149,26 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1073273215
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1073273209}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08c508db08124c23b25f968d6d489b1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AquariumGame.Features.FishVitals.Scripts.View.FishVitalsView
+  offset: {x: 0, y: 0.6, z: 0}
+  width: 0.7
+  height: 0.08
+  spacing: 0.04
+  sortingOrder: 20
+  hungryBlinkSpeed: 4
+  backgroundColor: {r: 0, g: 0, b: 0, a: 0.6}
+  healthColor: {r: 0.3, g: 0.9, b: 0.35, a: 1}
+  lowHealthColor: {r: 0.95, g: 0.25, b: 0.2, a: 1}
+  saturationColor: {r: 1, g: 0.7, b: 0.15, a: 1}
+  hungryColor: {r: 0.95, g: 0.3, b: 0.1, a: 1}
