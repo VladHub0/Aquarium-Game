@@ -1,7 +1,7 @@
 using System;
 using System.Threading;
 using AquariumGame.Features.Bootstrap.Scripts.States;
-using AquariumGame.Features.StateMachine.Scripts.Core;
+using AquariumGame.Features.StateMachine.Scripts.Core.Interface;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Zenject;

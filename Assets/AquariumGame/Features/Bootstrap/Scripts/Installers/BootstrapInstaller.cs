@@ -8,8 +8,10 @@ using AquariumGame.Features.Gameplay.Scripts.Services;
 using AquariumGame.Features.Pause.Scripts.Services;
 using AquariumGame.Features.SceneLoading.Scripts.Services;
 using AquariumGame.Features.StateMachine.Scripts.Core;
+using AquariumGame.Features.StateMachine.Scripts.Core.Interface;
+using AquariumGame.Features.StateMachine.Scripts.Factory;
 using AquariumGame.Features.StateMachine.Scripts.Factory.Interface;
-using AquariumGame.Features.StateMachine.Scripts.GameFlow.Interface;
+using AquariumGame.Features.StateMachine.Scripts.GameFlow;
 using Zenject;
 
 namespace AquariumGame.Features.Bootstrap.Scripts.Installers

@@ -9,9 +9,4 @@ namespace AquariumGame.Features.StateMachine.Scripts.Core.Interface
         UniTask<StateTransition> Execute(CancellationToken token);
         UniTask Exit(CancellationToken token);
     }
-
-    public interface IPayloadState<in TPayload> : IState
-    {
-        void SetPayload(TPayload payload);
-    }
 }
