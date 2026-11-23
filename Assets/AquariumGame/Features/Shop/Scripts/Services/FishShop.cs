@@ -1,7 +1,8 @@
 using System.Threading;
+using AquariumGame.Features.Fish.Scripts.Catalog;
+using AquariumGame.Features.Gameplay.Scripts.Services.Interface;
 using AquariumGame.Features.Shop.Scripts.Services.Interface;
 using AquariumGame.Features.Wallet.Scripts.Model.Interface;
-using AquariumGame.Infrastructure.Services;
 using Cysharp.Threading.Tasks;
 
 namespace AquariumGame.Features.Shop.Scripts.Services

@@ -1,9 +1,7 @@
 using AquariumGame.Features.Fish.Scripts.Configs;
 using AquariumGame.Features.Fish.Scripts.Configs.Interface;
-using AquariumGame.Features.Fish.Scripts.Installers;
 using UnityEngine;
 using Zenject;
-
 
 namespace AquariumGame.Features.Fish.Scripts.Installers
 {
