@@ -3,6 +3,7 @@ using AquariumGame.Features.Bootstrap.Scripts.EntryPoint;
 using AquariumGame.Features.Fish.Scripts.Installers;
 using AquariumGame.Features.Gameplay.Scripts.Installers;
 using AquariumGame.Features.Pause.Scripts.Installers;
+using AquariumGame.Features.PointerInput.Scripts.Installers;
 using AquariumGame.Features.SceneLoading.Scripts.Installers;
 using AquariumGame.Features.StateMachine.Scripts.Installers;
 using Zenject;
@@ -17,6 +18,7 @@ namespace AquariumGame.Features.Bootstrap.Scripts.Installers
             SceneLoadingInstaller.Install(Container);
             StateMachineInstaller.Install(Container);
             PauseInstaller.Install(Container);
+            PointerInputInstaller.Install(Container);
             FishServicesInstaller.Install(Container);
             GameplayInstaller.Install(Container);
 
