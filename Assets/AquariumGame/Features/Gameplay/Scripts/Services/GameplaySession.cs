@@ -1,5 +1,7 @@
 using System.Threading;
 using AquariumGame.Features.AssetManagement.Scripts.Keys;
+using AquariumGame.Features.Feeding.Scripts.Model.Interface;
+using AquariumGame.Features.Feeding.Scripts.Services.Food.Interface;
 using AquariumGame.Features.Fish.Scripts.Catalog;
 using AquariumGame.Features.Fish.Scripts.Services.Spawner.Interface;
 using AquariumGame.Features.Fish.Scripts.Services.Waypoints.Interface;
@@ -22,6 +24,8 @@ namespace AquariumGame.Features.Gameplay.Scripts.Services
         private readonly IFishSpawner _fishSpawner;
         private readonly IFishWaypointsService _waypoints;
         private readonly IWalletModel _wallet;
+        private readonly IFoodService _food;
+        private readonly IFeedingModeModel _feedingMode;
 
         private Vector3 _lastSpawnPoint;
         private int _spawnedCount;
@@ -32,12 +36,16 @@ namespace AquariumGame.Features.Gameplay.Scripts.Services
             ISceneLoader sceneLoader,
             IFishSpawner fishSpawner,
             IFishWaypointsService waypoints,
-            IWalletModel wallet)
+            IWalletModel wallet,
+            IFoodService food,
+            IFeedingModeModel feedingMode)
         {
             _sceneLoader = sceneLoader;
             _fishSpawner = fishSpawner;
             _waypoints = waypoints;
             _wallet = wallet;
+            _food = food;
+            _feedingMode = feedingMode;
         }
 
         public async UniTask StartAsync(CancellationToken token)
@@ -46,6 +54,8 @@ namespace AquariumGame.Features.Gameplay.Scripts.Services
                 return;
 
             _wallet.Reset();
+            _food.Clear();
+            _feedingMode.SetActive(false);
             _spawnedCount = 0;
             _lastSpawnPoint = Vector3.zero;
 
@@ -69,6 +79,8 @@ namespace AquariumGame.Features.Gameplay.Scripts.Services
                 return;
 
             _fishSpawner.DespawnAll();
+            _food.Clear();
+            _feedingMode.SetActive(false);
             IsActive = false;
         }
 

@@ -428,6 +428,7 @@ MonoBehaviour:
   _monoInstallers:
   - {fileID: 800000005}
   - {fileID: 800000006}
+  - {fileID: 800000008}
   _installerPrefabs: []
   _autoRun: 1
   OnPreInstall:
@@ -1177,6 +1178,8 @@ GameObject:
   - component: {fileID: 800000004}
   - component: {fileID: 800000005}
   - component: {fileID: 800000006}
+  - component: {fileID: 800000007}
+  - component: {fileID: 800000008}
   m_Layer: 5
   m_Name: Hud
   m_TagString: Untagged
@@ -1253,6 +1256,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c4313e878cf4498a0484742d5d43fa6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AquariumGame.Features.Shop.Scripts.Installers.ShopInstaller
+--- !u!114 &800000007
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 800000001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b94e2b8138284cfcb174dc7cd6a4e640, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AquariumGame.Features.Feeding.Scripts.View.FeedButtonView
+  foodSprite: {fileID: 21300000, guid: 595b71974108428cb9b551bf8ff968a6, type: 3}
+  idleLabel: Feed
+  activeLabel: Tap aquarium
+  idleColor: {r: 1, g: 1, b: 1, a: 1}
+  activeColor: {r: 1, g: 0.8, b: 0.35, a: 1}
+  labelColor: {r: 0.15, g: 0.15, b: 0.2, a: 1}
+--- !u!114 &800000008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 800000001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44c478477cf94f5a9212e1f0d37520d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AquariumGame.Features.Feeding.Scripts.Installers.FeedingViewInstaller
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
