@@ -6,6 +6,6 @@ namespace AquariumGame.Features.Fish.Scripts.View.Interface
     {
         Vector3 Position { get; set; }
 
-        void LookTo(Vector3 direction);
+        void LookTo(Vector3 direction, float deltaTime);
     }
 }
