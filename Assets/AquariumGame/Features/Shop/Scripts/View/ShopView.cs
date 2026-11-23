@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using AquariumGame.Features.Shop.Scripts.View.Interface;
-using AquariumGame.UI;
+using AquariumGame.Features.UI.Scripts;
 using UnityEngine;
 using UnityEngine.UI;
 

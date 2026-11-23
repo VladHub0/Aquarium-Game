@@ -1,5 +1,5 @@
+using AquariumGame.Features.UI.Scripts;
 using AquariumGame.Features.Wallet.Scripts.View.Interface;
-using AquariumGame.UI;
 using UnityEngine;
 using UnityEngine.UI;
 

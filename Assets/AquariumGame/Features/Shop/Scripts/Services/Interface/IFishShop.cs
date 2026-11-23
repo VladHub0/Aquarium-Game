@@ -1,5 +1,5 @@
 using System.Threading;
-using AquariumGame.Infrastructure.Services;
+using AquariumGame.Features.Fish.Scripts.Catalog;
 using Cysharp.Threading.Tasks;
 
 namespace AquariumGame.Features.Shop.Scripts.Services.Interface
