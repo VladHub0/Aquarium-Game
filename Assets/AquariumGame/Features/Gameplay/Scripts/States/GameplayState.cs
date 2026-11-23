@@ -5,6 +5,7 @@ using AquariumGame.Features.MainMenu.Scripts.States;
 using AquariumGame.Features.Pause.Scripts.States;
 using AquariumGame.Features.StateMachine.Scripts.Core;
 using AquariumGame.Features.StateMachine.Scripts.GameFlow.Interface;
+using AquariumGame.Features.Victory.Scripts.States;
 using Cysharp.Threading.Tasks;
 
 namespace AquariumGame.Features.Gameplay.Scripts.States
@@ -31,7 +32,8 @@ namespace AquariumGame.Features.Gameplay.Scripts.States
             var index = await UniTask.WhenAny(
                 _gameFlow.WaitForTogglePauseAsync(cts.Token),
                 _gameFlow.WaitForMainMenuAsync(cts.Token),
-                _gameFlow.WaitForGameOverAsync(cts.Token));
+                _gameFlow.WaitForGameOverAsync(cts.Token),
+                _gameFlow.WaitForVictoryAsync(cts.Token));
 
             cts.Cancel();
 
@@ -43,6 +45,9 @@ namespace AquariumGame.Features.Gameplay.Scripts.States
 
             if (index == 2)
                 return Transition.GoTo<GameOverState>();
+
+            if (index == 3)
+                return Transition.GoTo<VictoryState>();
 
             return Transition.GoTo<MainMenuState>();
         }
