@@ -13,3 +13,11 @@ MonoBehaviour:
   m_Name: FishConfig
   m_EditorClassIdentifier: Assembly-CSharp::AquariumGame.Features.Fish.Scripts.Configs.FishConfig
   speed: 1
+  waypointReachDistance: 0.05
+  health: 100
+  saturation: 100
+  saturationTick: 2.5
+  starvationDamage: 4
+  regeneration: 2
+  hungryThreshold: 0.4
+  fullThreshold: 0.9

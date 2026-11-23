@@ -44,20 +44,34 @@ namespace AquariumGame.Features.Fish.Scripts.Services.Spawner
             return fish.Facade;
         }
 
+        public void Despawn(IFishFacade facade)
+        {
+            var index = _spawned.FindIndex(fish => fish.Facade == facade);
+            if (index < 0)
+                return;
+
+            var instance = _spawned[index];
+            _spawned.RemoveAt(index);
+            Release(instance);
+        }
+
         public void DespawnAll()
         {
             foreach (var fish in _spawned)
-            {
-                _registry.Remove(fish.Facade);
-                fish.Facade.Dispose();
-
-                if (fish.Root != null)
-                    Object.Destroy(fish.Root);
-            }
+                Release(fish);
 
             _spawned.Clear();
         }
 
         public void Dispose() => DespawnAll();
+
+        private void Release(FishInstance fish)
+        {
+            _registry.Remove(fish.Facade);
+            fish.Facade.Dispose();
+
+            if (fish.Root != null)
+                Object.Destroy(fish.Root);
+        }
     }
 }

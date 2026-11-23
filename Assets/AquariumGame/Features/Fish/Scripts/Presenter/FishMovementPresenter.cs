@@ -31,22 +31,30 @@ namespace AquariumGame.Features.Fish.Scripts.Presenter
             if (!_model.HasTarget && !TrySelectNextTarget())
                 return;
 
+            if (MoveTowards(_model.Target, _model.Speed, _config.WaypointReachDistance, deltaTime))
+                TrySelectNextTarget();
+        }
+
+        public bool MoveTowards(Vector3 target, float speed, float reachDistance, float deltaTime)
+        {
             var position = _view.Position;
-            var target = _model.Target;
-            var next = Vector3.MoveTowards(position, target, _model.Speed * deltaTime);
+            target.z = position.z;
+
+            var next = Vector3.MoveTowards(position, target, speed * deltaTime);
 
             _view.LookTo(target - position, deltaTime);
             _view.Position = next;
 
-            if (Vector3.Distance(next, target) <= _config.WaypointReachDistance)
-                TrySelectNextTarget();
+            return Vector3.Distance(next, target) <= reachDistance;
         }
 
-        public void Dispose()
+        public void Stop()
         {
             _waypoints.Release(this);
             _model.HasTarget = false;
         }
+
+        public void Dispose() => Stop();
 
         private bool TrySelectNextTarget()
         {

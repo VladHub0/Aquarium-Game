@@ -9,6 +9,8 @@ namespace AquariumGame.Features.Fish.Scripts.Services.Spawner.Interface
     {
         UniTask<IFishFacade> SpawnAsync(string key, Vector3 position, CancellationToken token);
 
+        void Despawn(IFishFacade fish);
+
         void DespawnAll();
     }
 }
