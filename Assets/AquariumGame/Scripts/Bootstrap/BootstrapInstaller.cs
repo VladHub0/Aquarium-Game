@@ -14,7 +14,7 @@ namespace AquariumGame.Bootstrap
             BindStateMachine();
             BindGameplay();
 
-            Container.BindInterfacesTo<GameEntryPoint>().AsSingle().NonLazy();
+            Container.BindInterfacesTo<GameEntryPoint>().AsSingle();
         }
 
         private void BindServices()

@@ -181,7 +181,8 @@ MonoBehaviour:
       m_Calls: []
   _parentNewObjectsUnderSceneContext: 0
   _contractNames: []
-  _parentContractNames: []
+  _parentContractNames:
+  - Bootstrap
 --- !u!1 &200010
 GameObject:
   m_ObjectHideFlags: 0
