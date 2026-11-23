@@ -1,8 +1,8 @@
 using System;
 
-namespace AquariumGame.Infrastructure.Services
+namespace AquariumGame.Features.Wallet.Scripts.Model.Interface
 {
-    public interface IWalletService
+    public interface IWalletModel
     {
         int Coins { get; }
 

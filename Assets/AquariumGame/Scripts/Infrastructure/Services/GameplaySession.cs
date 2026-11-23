@@ -1,6 +1,7 @@
 using System.Threading;
 using AquariumGame.Features.Fish.Scripts.Services.Spawner.Interface;
 using AquariumGame.Features.Fish.Scripts.Services.Waypoints.Interface;
+using AquariumGame.Features.Wallet.Scripts.Model.Interface;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
@@ -16,7 +17,7 @@ namespace AquariumGame.Infrastructure.Services
         private readonly ISceneLoader _sceneLoader;
         private readonly IFishSpawner _fishSpawner;
         private readonly IFishWaypointsService _waypoints;
-        private readonly IWalletService _wallet;
+        private readonly IWalletModel _wallet;
 
         private Vector3 _lastSpawnPoint;
         private int _spawnedCount;
@@ -27,7 +28,7 @@ namespace AquariumGame.Infrastructure.Services
             ISceneLoader sceneLoader,
             IFishSpawner fishSpawner,
             IFishWaypointsService waypoints,
-            IWalletService wallet)
+            IWalletModel wallet)
         {
             _sceneLoader = sceneLoader;
             _fishSpawner = fishSpawner;

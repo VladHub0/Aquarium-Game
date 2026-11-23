@@ -425,7 +425,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Zenject::Zenject.SceneContext
   _scriptableObjectInstallers: []
-  _monoInstallers: []
+  _monoInstallers:
+  - {fileID: 800000005}
+  - {fileID: 800000006}
   _installerPrefabs: []
   _autoRun: 1
   OnPreInstall:
@@ -1172,6 +1174,9 @@ GameObject:
   m_Component:
   - component: {fileID: 800000002}
   - component: {fileID: 800000003}
+  - component: {fileID: 800000004}
+  - component: {fileID: 800000005}
+  - component: {fileID: 800000006}
   m_Layer: 5
   m_Name: Hud
   m_TagString: Untagged
@@ -1203,12 +1208,51 @@ MonoBehaviour:
   m_GameObject: {fileID: 800000001}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 425a07b9ad4e4a54b4208524126157ba, type: 3}
+  m_Script: {fileID: 11500000, guid: f94c079101194c84b11d9329c49e0d73, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AquariumGame.UI.HudView
+  m_EditorClassIdentifier: Assembly-CSharp::AquariumGame.Features.Wallet.Scripts.View.CoinsView
   coinSprite: {fileID: 21300000, guid: a56836ccd0e741b1b2b623151f5bf83f, type: 3}
   panelColor: {r: 0, g: 0, b: 0, a: 0.45}
-  coinTextColor: {r: 1, g: 0.86, b: 0.25, a: 1}
+  textColor: {r: 1, g: 0.86, b: 0.25, a: 1}
+--- !u!114 &800000004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 800000001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f29015844eed4f05b125a0d96ca3ea54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AquariumGame.Features.Shop.Scripts.View.ShopView
+  coinSprite: {fileID: 21300000, guid: a56836ccd0e741b1b2b623151f5bf83f, type: 3}
+  labelColor: {r: 0.15, g: 0.15, b: 0.2, a: 1}
+  coinColor: {r: 1, g: 0.86, b: 0.25, a: 1}
+--- !u!114 &800000005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 800000001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f43955c72c242458da82cafa6fa9dd3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AquariumGame.Features.Wallet.Scripts.Installers.WalletViewInstaller
+--- !u!114 &800000006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 800000001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c4313e878cf4498a0484742d5d43fa6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AquariumGame.Features.Shop.Scripts.Installers.ShopInstaller
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

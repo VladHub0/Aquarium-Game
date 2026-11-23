@@ -1,16 +1,24 @@
 using System;
+using AquariumGame.Features.Wallet.Scripts.Configs.Interface;
+using AquariumGame.Features.Wallet.Scripts.Model.Interface;
 
-namespace AquariumGame.Infrastructure.Services
+namespace AquariumGame.Features.Wallet.Scripts.Model
 {
-    public sealed class WalletService : IWalletService
+    public sealed class WalletModel : IWalletModel
     {
-        public const int StartCoins = 300;
+        private readonly IWalletConfig _config;
 
-        public int Coins { get; private set; } = StartCoins;
+        public int Coins { get; private set; }
 
         public event Action<int> Changed;
 
-        public void Reset() => Set(StartCoins);
+        public WalletModel(IWalletConfig config)
+        {
+            _config = config;
+            Coins = config.StartCoins;
+        }
+
+        public void Reset() => Set(_config.StartCoins);
 
         public void Add(int amount)
         {
