@@ -129,6 +129,10 @@ Assets/AquariumGame/
 │   ├── PointerInput/       тапы по миру: IPointerInputService и обработчики ITapHandler с приоритетом
 │
 │   ├── GameOver/           конец игры: GameOverWatcher и GameOverState
+│
+│   ├── RoundTimer/         таймер раунда: модель, RoundTimerService, таймер в HUD (MVP), RoundTimerConfig
+│
+│   ├── Victory/            победа: VictoryState
 
 │   ├── Wallet/             монеты: MVP, WalletConfig, иконка монеты
 
@@ -657,6 +661,8 @@ UI не должен самостоятельно:
 \- Кормление: кнопка Feed (FeedButtonView и FeedButtonPresenter на объекте Hud сцены FishScene) переключает IFeedingModeModel. Корм создаёт FoodFactory, им владеет FoodService (Bootstrap): гранулы медленно тонут до BottomY и исчезают через Lifetime. FeedingSoInstaller подключён в SceneContext сцены Bootstrap, FishTapSoInstaller — в SceneContext сцены FishScene.
 
 \- Конец игры: GameOverWatcher (ITickable в Bootstrap) вызывает IGameFlowService.RequestGameOver, когда сессия активна и в IFishRegistry не осталось рыб. GameplayState переходит в GameOverState, тот завершает сессию и переводит игру в MainMenuState, который загружает сцену MainMenu.
+
+\- Победа: RoundTimerService (ITickable в Bootstrap) сбрасывает таймер при старте и конце сессии и уменьшает его, пока сессия активна (на паузе Time.timeScale = 0, поэтому таймер стоит). Когда время вышло и в IFishRegistry есть живая рыба, вызывается IGameFlowService.RequestVictory; GameplayState переходит в VictoryState, тот завершает сессию и переводит игру в MainMenuState. Длительность раунда и порог красного цвета задаются в RoundTimerConfig.asset, RoundTimerSoInstaller подключён в SceneContext сцены Bootstrap, таймер в HUD собирают RoundTimerView и RoundTimerPresenter на объекте Hud сцены FishScene.
 
 \- Кто владеет загруженными ресурсами: AddressablesAssetProvider (кеш и preload-handle, освобождает в ReleaseAll/Dispose); SceneLoader владеет handle текущей сцены и оверлея; handle префабов рыб хранит AddressablesAssetProvider, FishSpawner владеет только экземплярами. Настройки Addressables создаёт editor-скрипт Features/AssetManagement/Editor/AddressablesSetup.cs (префабы Fish, FishTang, FishGramma с лейблом "preload"; сцены MainMenu, FishScene, Pause).
 
