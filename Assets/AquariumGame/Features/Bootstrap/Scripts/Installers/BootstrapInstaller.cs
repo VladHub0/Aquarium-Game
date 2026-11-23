@@ -1,6 +1,7 @@
 using AquariumGame.Features.AssetManagement.Scripts.Installers;
 using AquariumGame.Features.Bootstrap.Scripts.EntryPoint;
 using AquariumGame.Features.Fish.Scripts.Installers;
+using AquariumGame.Features.GameOver.Scripts.Installers;
 using AquariumGame.Features.Gameplay.Scripts.Installers;
 using AquariumGame.Features.Pause.Scripts.Installers;
 using AquariumGame.Features.PointerInput.Scripts.Installers;
@@ -21,6 +22,7 @@ namespace AquariumGame.Features.Bootstrap.Scripts.Installers
             PointerInputInstaller.Install(Container);
             FishServicesInstaller.Install(Container);
             GameplayInstaller.Install(Container);
+            GameOverInstaller.Install(Container);
 
             Container.BindInterfacesTo<GameEntryPoint>().AsSingle();
         }

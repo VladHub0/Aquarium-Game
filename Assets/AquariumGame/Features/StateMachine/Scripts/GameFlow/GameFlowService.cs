@@ -9,10 +9,12 @@ namespace AquariumGame.Features.StateMachine.Scripts.GameFlow
         private UniTaskCompletionSource _startGame = new();
         private UniTaskCompletionSource _mainMenu = new();
         private UniTaskCompletionSource _togglePause = new();
+        private UniTaskCompletionSource _gameOver = new();
 
         public void RequestStartGame() => _startGame.TrySetResult();
         public void RequestMainMenu() => _mainMenu.TrySetResult();
         public void RequestTogglePause() => _togglePause.TrySetResult();
+        public void RequestGameOver() => _gameOver.TrySetResult();
 
         public async UniTask WaitForStartGameAsync(CancellationToken token)
         {
@@ -30,6 +32,12 @@ namespace AquariumGame.Features.StateMachine.Scripts.GameFlow
         {
             _togglePause = new UniTaskCompletionSource();
             await _togglePause.Task.AttachExternalCancellation(token);
+        }
+
+        public async UniTask WaitForGameOverAsync(CancellationToken token)
+        {
+            _gameOver = new UniTaskCompletionSource();
+            await _gameOver.Task.AttachExternalCancellation(token);
         }
     }
 }
