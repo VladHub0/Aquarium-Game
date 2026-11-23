@@ -430,6 +430,7 @@ MonoBehaviour:
   - {fileID: 800000005}
   - {fileID: 800000006}
   - {fileID: 800000008}
+  - {fileID: 800000010}
   _installerPrefabs: []
   _autoRun: 1
   OnPreInstall:
@@ -1181,6 +1182,8 @@ GameObject:
   - component: {fileID: 800000006}
   - component: {fileID: 800000007}
   - component: {fileID: 800000008}
+  - component: {fileID: 800000009}
+  - component: {fileID: 800000010}
   m_Layer: 5
   m_Name: Hud
   m_TagString: Untagged
@@ -1287,6 +1290,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44c478477cf94f5a9212e1f0d37520d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AquariumGame.Features.Feeding.Scripts.Installers.FeedingViewInstaller
+--- !u!114 &800000009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 800000001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88aab61ee4fa47d19c0304cd334c416e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AquariumGame.Features.RoundTimer.Scripts.View.RoundTimerView
+  panelColor: {r: 0, g: 0, b: 0, a: 0.45}
+  textColor: {r: 1, g: 1, b: 1, a: 1}
+  warningColor: {r: 1, g: 0.35, b: 0.3, a: 1}
+--- !u!114 &800000010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 800000001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97b04bcffa4c4d85bd4315a2ecd06061, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AquariumGame.Features.RoundTimer.Scripts.Installers.RoundTimerViewInstaller
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
