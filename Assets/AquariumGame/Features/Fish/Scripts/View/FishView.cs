@@ -16,13 +16,13 @@ namespace AquariumGame.Features.Fish.Scripts.View
             set => transform.position = value;
         }
 
-        public void LookTo(Vector3 direction)
+        public void LookTo(Vector3 direction, float deltaTime)
         {
             if (new Vector2(direction.x, direction.y).sqrMagnitude < MinDirectionSqr)
                 return;
 
             var targetAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-            var angle = Mathf.MoveTowardsAngle(transform.eulerAngles.z, targetAngle, turnSpeed * Time.deltaTime);
+            var angle = Mathf.MoveTowardsAngle(transform.eulerAngles.z, targetAngle, turnSpeed * deltaTime);
             transform.rotation = Quaternion.Euler(0f, 0f, angle);
 
             if (_spriteRenderer == null)

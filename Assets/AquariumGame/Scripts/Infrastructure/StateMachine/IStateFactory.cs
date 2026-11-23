@@ -10,10 +10,10 @@ namespace AquariumGame.Infrastructure.StateMachine
 
     public sealed class StateFactory : IStateFactory
     {
-        private readonly DiContainer _container;
+        private readonly IInstantiator _instantiator;
 
-        public StateFactory(DiContainer container) => _container = container;
+        public StateFactory(IInstantiator instantiator) => _instantiator = instantiator;
 
-        public IState Create(Type stateType) => (IState)_container.Instantiate(stateType);
+        public IState Create(Type stateType) => (IState)_instantiator.Instantiate(stateType);
     }
 }

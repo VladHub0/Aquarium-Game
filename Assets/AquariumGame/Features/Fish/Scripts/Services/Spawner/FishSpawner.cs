@@ -2,25 +2,29 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using AquariumGame.Features.Fish.Scripts.Services.Facade.Interface;
+using AquariumGame.Features.Fish.Scripts.Services.Factory;
+using AquariumGame.Features.Fish.Scripts.Services.Factory.Interface;
+using AquariumGame.Features.Fish.Scripts.Services.Registry.Interface;
 using AquariumGame.Features.Fish.Scripts.Services.Spawner.Interface;
 using AquariumGame.Infrastructure.Services;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
-using Zenject;
 using Object = UnityEngine.Object;
 
 namespace AquariumGame.Features.Fish.Scripts.Services.Spawner
 {
     public sealed class FishSpawner : IFishSpawner, IDisposable
     {
-        private readonly DiContainer _container;
         private readonly IAssetProvider _assets;
-        private readonly List<GameObject> _spawned = new();
+        private readonly IFishFactory _factory;
+        private readonly IFishRegistry _registry;
+        private readonly List<FishInstance> _spawned = new List<FishInstance>();
 
-        public FishSpawner(DiContainer container, IAssetProvider assets)
+        public FishSpawner(IAssetProvider assets, IFishFactory factory, IFishRegistry registry)
         {
-            _container = container;
             _assets = assets;
+            _factory = factory;
+            _registry = registry;
         }
 
         public async UniTask<IFishFacade> SpawnAsync(string key, Vector3 position, CancellationToken token)
@@ -31,23 +35,25 @@ namespace AquariumGame.Features.Fish.Scripts.Services.Spawner
 
             token.ThrowIfCancellationRequested();
 
-            var instance = _container.InstantiatePrefab(prefab, position, Quaternion.identity, null);
-            _spawned.Add(instance);
+            var fish = _factory.Create(prefab, position);
+            _spawned.Add(fish);
 
-            var context = instance.GetComponent<GameObjectContext>();
-            if (context == null)
-                throw new InvalidOperationException($"[FishSpawner] На префабе '{prefab.name}' нет GameObjectContext.");
+            fish.Facade.Init();
+            _registry.Add(fish.Facade);
 
-            var facade = context.Container.Resolve<IFishFacade>();
-            facade.Init();
-            return facade;
+            return fish.Facade;
         }
 
         public void DespawnAll()
         {
             foreach (var fish in _spawned)
-                if (fish != null)
-                    Object.Destroy(fish);
+            {
+                _registry.Remove(fish.Facade);
+                fish.Facade.Dispose();
+
+                if (fish.Root != null)
+                    Object.Destroy(fish.Root);
+            }
 
             _spawned.Clear();
         }

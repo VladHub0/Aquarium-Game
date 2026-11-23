@@ -1,14 +1,13 @@
-using System;
 using AquariumGame.Features.Fish.Scripts.Configs.Interface;
 using AquariumGame.Features.Fish.Scripts.Model.Interface;
+using AquariumGame.Features.Fish.Scripts.Presenter.Interface;
 using AquariumGame.Features.Fish.Scripts.Services.Waypoints.Interface;
 using AquariumGame.Features.Fish.Scripts.View.Interface;
 using UnityEngine;
-using Zenject;
 
 namespace AquariumGame.Features.Fish.Scripts.Presenter
 {
-    public sealed class FishMovementPresenter : ITickable, IDisposable
+    public sealed class FishMovementPresenter : IFishMovementPresenter
     {
         private readonly IFishView _view;
         private readonly IFishMovementModel _model;
@@ -27,23 +26,27 @@ namespace AquariumGame.Features.Fish.Scripts.Presenter
             _waypoints = waypoints;
         }
 
-        public void Tick()
+        public void Tick(float deltaTime)
         {
             if (!_model.HasTarget && !TrySelectNextTarget())
                 return;
 
             var position = _view.Position;
             var target = _model.Target;
-            var next = Vector3.MoveTowards(position, target, _model.Speed * Time.deltaTime);
+            var next = Vector3.MoveTowards(position, target, _model.Speed * deltaTime);
 
-            _view.LookTo(target - position);
+            _view.LookTo(target - position, deltaTime);
             _view.Position = next;
 
             if (Vector3.Distance(next, target) <= _config.WaypointReachDistance)
                 TrySelectNextTarget();
         }
 
-        public void Dispose() => _waypoints.Release(this);
+        public void Dispose()
+        {
+            _waypoints.Release(this);
+            _model.HasTarget = false;
+        }
 
         private bool TrySelectNextTarget()
         {

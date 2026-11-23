@@ -1,3 +1,5 @@
+using AquariumGame.Features.Fish.Scripts.Services.Factory;
+using AquariumGame.Features.Fish.Scripts.Services.Registry;
 using AquariumGame.Features.Fish.Scripts.Services.Spawner;
 using AquariumGame.Features.Fish.Scripts.Services.Waypoints;
 using AquariumGame.Infrastructure.Services;
@@ -14,7 +16,7 @@ namespace AquariumGame.Bootstrap
             BindStateMachine();
             BindGameplay();
 
-            Container.BindInterfacesTo<GameEntryPoint>().AsSingle().NonLazy();
+            Container.BindInterfacesTo<GameEntryPoint>().AsSingle();
         }
 
         private void BindServices()
@@ -23,7 +25,6 @@ namespace AquariumGame.Bootstrap
             Container.BindInterfacesTo<SceneLoader>().AsSingle();
             Container.BindInterfacesTo<GameFlowService>().AsSingle();
             Container.BindInterfacesTo<PauseInputService>().AsSingle();
-            Container.BindInterfacesTo<WalletService>().AsSingle();
         }
 
         private void BindStateMachine()
@@ -34,10 +35,11 @@ namespace AquariumGame.Bootstrap
 
         private void BindGameplay()
         {
+            Container.BindInterfacesTo<FishFactory>().AsSingle();
+            Container.BindInterfacesTo<FishRegistry>().AsSingle();
             Container.BindInterfacesTo<FishSpawner>().AsSingle();
             Container.BindInterfacesTo<FishWaypointsService>().AsSingle();
             Container.BindInterfacesTo<GameplaySession>().AsSingle();
-            Container.BindInterfacesTo<FishShop>().AsSingle();
         }
     }
 }

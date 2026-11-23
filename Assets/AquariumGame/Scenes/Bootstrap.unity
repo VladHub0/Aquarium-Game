@@ -164,7 +164,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89715ad69b973a14899afa2c6730b30b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Zenject::Zenject.SceneContext
-  _scriptableObjectInstallers: []
+  _scriptableObjectInstallers:
+  - {fileID: 11400000, guid: 4b4d1156cc3147499cdc1dd0ad6358ec, type: 2}
   _monoInstallers:
   - {fileID: 100003}
   _installerPrefabs: []
@@ -182,7 +183,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   _parentNewObjectsUnderSceneContext: 0
-  _contractNames: []
+  _contractNames:
+  - Bootstrap
   _parentContractNames: []
 --- !u!114 &100003
 MonoBehaviour:

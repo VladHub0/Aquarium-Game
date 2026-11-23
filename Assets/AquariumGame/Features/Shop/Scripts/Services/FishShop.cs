@@ -1,20 +1,23 @@
 using System.Threading;
+using AquariumGame.Features.Shop.Scripts.Services.Interface;
+using AquariumGame.Features.Wallet.Scripts.Model.Interface;
+using AquariumGame.Infrastructure.Services;
 using Cysharp.Threading.Tasks;
 
-namespace AquariumGame.Infrastructure.Services
+namespace AquariumGame.Features.Shop.Scripts.Services
 {
     public sealed class FishShop : IFishShop
     {
-        private readonly IWalletService _wallet;
+        private readonly IWalletModel _wallet;
         private readonly IGameplaySession _session;
 
-        public FishShop(IWalletService wallet, IGameplaySession session)
+        public FishShop(IWalletModel wallet, IGameplaySession session)
         {
             _wallet = wallet;
             _session = session;
         }
 
-        public bool CanBuy(FishSpecies species) => _session.IsActive && _wallet.Coins >= species.Price;
+        public bool CanAfford(FishSpecies species) => _wallet.Coins >= species.Price;
 
         public async UniTask<bool> TryBuyAsync(FishSpecies species, CancellationToken token)
         {

@@ -1,11 +1,12 @@
 using System.Threading;
+using AquariumGame.Infrastructure.Services;
 using Cysharp.Threading.Tasks;
 
-namespace AquariumGame.Infrastructure.Services
+namespace AquariumGame.Features.Shop.Scripts.Services.Interface
 {
     public interface IFishShop
     {
-        bool CanBuy(FishSpecies species);
+        bool CanAfford(FishSpecies species);
 
         UniTask<bool> TryBuyAsync(FishSpecies species, CancellationToken token);
     }

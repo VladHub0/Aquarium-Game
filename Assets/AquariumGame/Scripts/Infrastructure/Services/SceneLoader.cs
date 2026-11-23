@@ -5,18 +5,13 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.ResourceManagement.ResourceProviders;
 using UnityEngine.SceneManagement;
-using Zenject;
 
 namespace AquariumGame.Infrastructure.Services
 {
     public sealed class SceneLoader : ISceneLoader
     {
-        private readonly DiContainer _container;
-
         private AsyncOperationHandle<SceneInstance> _currentScene;
         private AsyncOperationHandle<SceneInstance> _overlayScene;
-
-        public SceneLoader(DiContainer container) => _container = container;
 
         public async UniTask LoadAsync(string sceneKey, CancellationToken token)
         {
@@ -41,7 +36,7 @@ namespace AquariumGame.Infrastructure.Services
             _overlayScene = default;
         }
 
-        private async UniTask<AsyncOperationHandle<SceneInstance>> LoadAdditive(string sceneKey, CancellationToken token)
+        private static async UniTask<AsyncOperationHandle<SceneInstance>> LoadAdditive(string sceneKey, CancellationToken token)
         {
             if (!await AddressablesAssetProvider.HasLocations(sceneKey, typeof(SceneInstance), token))
             {
@@ -49,17 +44,9 @@ namespace AquariumGame.Infrastructure.Services
                 return default;
             }
 
-            SceneContext.ParentContainers = new[] { _container };
-            try
-            {
-                var handle = Addressables.LoadSceneAsync(sceneKey, LoadSceneMode.Additive);
-                await handle.ToUniTask(cancellationToken: token);
-                return handle;
-            }
-            finally
-            {
-                SceneContext.ParentContainers = null;
-            }
+            var handle = Addressables.LoadSceneAsync(sceneKey, LoadSceneMode.Additive);
+            await handle.ToUniTask(cancellationToken: token);
+            return handle;
         }
 
         private static async UniTask Unload(AsyncOperationHandle<SceneInstance> handle, CancellationToken token)
