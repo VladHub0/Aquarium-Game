@@ -127,6 +127,8 @@ Assets/AquariumGame/
 │   ├── FishTap/            монеты за тап по рыбе, FishTapConfig
 │
 │   ├── PointerInput/       тапы по миру: IPointerInputService и обработчики ITapHandler с приоритетом
+│
+│   ├── GameOver/           конец игры: GameOverWatcher и GameOverState
 
 │   ├── Wallet/             монеты: MVP, WalletConfig, иконка монеты
 
@@ -653,6 +655,8 @@ UI не должен самостоятельно:
 \- Ввод и тапы: PointerInputService (ITickable в Bootstrap) ловит нажатие Pointer, игнорирует нажатия по UI и при паузе (Time.timeScale = 0), переводит точку в мир и по приоритету передаёт её обработчикам ITapHandler, первый вернувший true забирает тап. FeedingTapHandler (приоритет 100) в режиме кормления бросает корм в точку тапа и выключает режим; FishTapHandler (приоритет 0, сцена FishScene) начисляет FishTapConfig.CoinsPerTap монет за тап по живой рыбе.
 
 \- Кормление: кнопка Feed (FeedButtonView и FeedButtonPresenter на объекте Hud сцены FishScene) переключает IFeedingModeModel. Корм создаёт FoodFactory, им владеет FoodService (Bootstrap): гранулы медленно тонут до BottomY и исчезают через Lifetime. FeedingSoInstaller подключён в SceneContext сцены Bootstrap, FishTapSoInstaller — в SceneContext сцены FishScene.
+
+\- Конец игры: GameOverWatcher (ITickable в Bootstrap) вызывает IGameFlowService.RequestGameOver, когда сессия активна и в IFishRegistry не осталось рыб. GameplayState переходит в GameOverState, тот завершает сессию и переводит игру в MainMenuState, который загружает сцену MainMenu.
 
 \- Кто владеет загруженными ресурсами: AddressablesAssetProvider (кеш и preload-handle, освобождает в ReleaseAll/Dispose); SceneLoader владеет handle текущей сцены и оверлея; handle префабов рыб хранит AddressablesAssetProvider, FishSpawner владеет только экземплярами. Настройки Addressables создаёт editor-скрипт Features/AssetManagement/Editor/AddressablesSetup.cs (префабы Fish, FishTang, FishGramma с лейблом "preload"; сцены MainMenu, FishScene, Pause).
 

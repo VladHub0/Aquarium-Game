@@ -1,4 +1,5 @@
 using System.Threading;
+using AquariumGame.Features.GameOver.Scripts.States;
 using AquariumGame.Features.Gameplay.Scripts.Services.Interface;
 using AquariumGame.Features.MainMenu.Scripts.States;
 using AquariumGame.Features.Pause.Scripts.States;
@@ -29,7 +30,8 @@ namespace AquariumGame.Features.Gameplay.Scripts.States
 
             var index = await UniTask.WhenAny(
                 _gameFlow.WaitForTogglePauseAsync(cts.Token),
-                _gameFlow.WaitForMainMenuAsync(cts.Token));
+                _gameFlow.WaitForMainMenuAsync(cts.Token),
+                _gameFlow.WaitForGameOverAsync(cts.Token));
 
             cts.Cancel();
 
@@ -38,6 +40,9 @@ namespace AquariumGame.Features.Gameplay.Scripts.States
                 _goingToPause = true;
                 return Transition.GoTo<PauseState>();
             }
+
+            if (index == 2)
+                return Transition.GoTo<GameOverState>();
 
             return Transition.GoTo<MainMenuState>();
         }
