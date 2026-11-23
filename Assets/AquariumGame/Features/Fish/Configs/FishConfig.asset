@@ -21,3 +21,6 @@ MonoBehaviour:
   regeneration: 2
   hungryThreshold: 0.4
   fullThreshold: 0.9
+  seekSpeedMultiplier: 1.6
+  deadFloatSpeed: 0.25
+  deadRemoveDelay: 3

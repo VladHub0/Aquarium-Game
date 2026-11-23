@@ -1,6 +1,8 @@
 using AquariumGame.Features.Fish.Scripts.Presenter.Interface;
 using AquariumGame.Features.Fish.Scripts.Services.Facade.Interface;
 using AquariumGame.Features.Fish.Scripts.View.Interface;
+using AquariumGame.Features.FishBehaviour.Scripts.Core.Interface;
+using AquariumGame.Features.FishBehaviour.Scripts.States;
 using AquariumGame.Features.FishVitals.Scripts.Model.Interface;
 using AquariumGame.Features.FishVitals.Scripts.Presenter.Interface;
 using AquariumGame.Features.FishVitals.Scripts.Services.Interface;
@@ -15,6 +17,7 @@ namespace AquariumGame.Features.Fish.Scripts.Services.Facade
         private readonly IFishVitalsModel _vitals;
         private readonly IFishVitalsService _vitalsService;
         private readonly IFishVitalsPresenter _vitalsPresenter;
+        private readonly IFishStateMachine _stateMachine;
 
         private bool _disposed;
 
@@ -23,18 +26,24 @@ namespace AquariumGame.Features.Fish.Scripts.Services.Facade
             IFishMovementPresenter movement,
             IFishVitalsModel vitals,
             IFishVitalsService vitalsService,
-            IFishVitalsPresenter vitalsPresenter)
+            IFishVitalsPresenter vitalsPresenter,
+            IFishStateMachine stateMachine)
         {
             _view = view;
             _movement = movement;
             _vitals = vitals;
             _vitalsService = vitalsService;
             _vitalsPresenter = vitalsPresenter;
+            _stateMachine = stateMachine;
         }
 
         public bool IsAlive => !_disposed && !_vitals.IsDead;
 
-        public void Init() => _vitalsPresenter.Init();
+        public void Init()
+        {
+            _vitalsPresenter.Init();
+            _stateMachine.Enter<FishSwimState>();
+        }
 
         public void Tick(float deltaTime)
         {
@@ -42,9 +51,7 @@ namespace AquariumGame.Features.Fish.Scripts.Services.Facade
                 return;
 
             _vitalsService.Tick(deltaTime);
-
-            if (!_vitals.IsDead)
-                _movement.Tick(deltaTime);
+            _stateMachine.Tick(deltaTime);
         }
 
         public bool ContainsPoint(Vector2 worldPoint) => !_disposed && _view.ContainsPoint(worldPoint);
@@ -57,6 +64,7 @@ namespace AquariumGame.Features.Fish.Scripts.Services.Facade
                 return;
 
             _disposed = true;
+            _stateMachine.Dispose();
             _movement.Dispose();
             _vitalsPresenter.Dispose();
         }
