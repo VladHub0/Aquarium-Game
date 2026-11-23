@@ -606,21 +606,21 @@ UI не должен самостоятельно:
 
 
 
-\- Фактическая стартовая сцена: Assets/AquariumGame/Scenes/Bootstrap.unity (индекс 0 в Build Settings). Далее GameStateMachine: BootstrapState → AddressablesInitState → PreloadAssetsState → MainMenuState (сцена MainMenu) → GameplayState (сцена FishScene). Сцены грузятся аддитивно через SceneLoader, их SceneContext — дочерний контейнер Bootstrap.
+\- Фактическая стартовая сцена: Assets/AquariumGame/Scenes/Bootstrap.unity (индекс 0 в Build Settings). Далее GameStateMachine: BootstrapState → AddressablesInitState → PreloadAssetsState → MainMenuState (сцена MainMenu) → GameplayState (сцена FishScene) ⇄ PauseState (оверлей Pause по Esc). Сцены MainMenu, FishScene и Pause — Addressables, грузятся аддитивно через SceneLoader. Их SceneContext находит родителя через контракт: у Bootstrap SceneContext _contractNames = Bootstrap, у дочерних сцен _parentContractNames = Bootstrap, поэтому SceneLoader не использует DiContainer.
 
-\- Фактические Installer: BootstrapInstaller (Bootstrap SceneContext: IAssetProvider, ISceneLoader, IGameFlowService, IStateFactory, IGameStateMachine, GameEntryPoint, IFishSpawner); FishScene SceneContext без installer (дочерний к Bootstrap); FishSoInstaller (ScriptableObjectInstaller: IFishConfig) + FishInstaller (FishFacade, IFishMovementModel, IFishVitalsModel) в GameObjectContext рыбы.
+\- Фактические Installer: BootstrapInstaller (Bootstrap SceneContext: IAssetProvider, ISceneLoader, IGameFlowService, PauseInputService, IStateFactory, IGameStateMachine, GameEntryPoint, IFishFactory, IFishRegistry, IFishSpawner, IFishWaypointsService, IGameplaySession) и WalletSoInstaller (ScriptableObjectInstaller в Bootstrap SceneContext: IWalletConfig + WalletInstaller → IWalletModel). FishScene SceneContext: WalletViewInstaller (ICoinsView, CoinsPresenter) и ShopInstaller (IFishShop, IShopView, ShopPresenter) на объекте Hud. FishSoInstaller (IFishConfig) + FishInstaller (IFishFacade, IFishMovementModel, IFishVitalsModel, IFishView, IFishMovementPresenter) в GameObjectContext рыбы. DiContainer используется только в Installer и фабриках; фабрики (StateFactory, FishFactory) создают объекты через IInstantiator. GameEntryPoint биндится через BindInterfacesTo без NonLazy: его создаёт InitializableManager как IInitializable.
 
-\- Где создаются рыбы: FishSpawner (Features/Fish/Scripts/Services/Spawner, биндится в BootstrapInstaller). GameplayState.Enter аддитивно грузит FishScene и вызывает IFishSpawner.SpawnAsync; префаб Features/Fish/Prefabs/Fish.prefab грузится через IAssetProvider по адресу "Fish" и создаётся DiContainer.InstantiatePrefab; GameplayState.Exit вызывает DespawnAll.
+\- Где создаются рыбы: GameplaySession (Scripts/Infrastructure/Services) при входе в GameplayState создаёт 5 рыб по очереди из FishCatalog (Fish, FishTang, FishGramma); FishShop создаёт купленных рыб через IGameplaySession.SpawnFishAsync. FishSpawner грузит префаб через IAssetProvider, создаёт экземпляр через IFishFactory (FishFactory: IInstantiator.InstantiatePrefab и получение IFishFacade из GameObjectContext), вызывает IFishFacade.Init и регистрирует рыбу в IFishRegistry. DespawnAll снимает рыбу с регистрации, вызывает IFishFacade.Dispose и уничтожает объект.
 
-\- Где реализовано движение: пока не реализовано, есть только FishMovementModel (скорость из FishConfig).
+\- Где реализовано движение: FishMovementPresenter (Features/Fish/Scripts/Presenter) двигает рыбу между точками FishWaypoints, точку резервирует FishWaypointsService (выбирается наименее занятая). Рыба не использует ITickable Zenject: FishRegistry (ITickable в Bootstrap) каждый кадр вызывает IFishFacade.Tick(deltaTime), фасад передаёт его в презентер. Разворот к цели выполняет FishView (поворот по Z и flipY при движении влево).
 
 \- Где определяются границы: пока не реализовано.
 
-\- Кто владеет загруженными ресурсами: AddressablesAssetProvider (кеш и preload-handle, освобождает в ReleaseAll/Dispose); SceneLoader владеет handle загруженной сцены; handle префаба рыбы хранит AddressablesAssetProvider, FishSpawner владеет только экземплярами. Настройки Addressables создаёт editor-скрипт AquariumGame/Editor/AddressablesSetup.cs (Fish.prefab: адрес "Fish", лейбл "preload").
+\- Кто владеет загруженными ресурсами: AddressablesAssetProvider (кеш и preload-handle, освобождает в ReleaseAll/Dispose); SceneLoader владеет handle текущей сцены и оверлея; handle префабов рыб хранит AddressablesAssetProvider, FishSpawner владеет только экземплярами. Настройки Addressables создаёт editor-скрипт AquariumGame/Editor/AddressablesSetup.cs (префабы Fish, FishTang, FishGramma с лейблом "preload"; сцены MainMenu, FishScene, Pause).
 
 \- Какие тесты уже существуют: нет.
 
-\- Известные ограничения: игра целиком запускается только со сцены Bootstrap; MainMenu собирает UI кодом (MainMenuView); выхода из GameplayState в меню пока нет в UI; рыба создаётся в точке (0,0,0); системы движения и границ аквариума ещё нет; настройки Addressables (Assets/AddressableAssetsData) создаются при первом открытии проекта в Unity.
+\- Известные ограничения: игра целиком запускается только со сцены Bootstrap; UI (MainMenuView, PauseView, CoinsView, ShopView) собирается кодом, общие помощники в Scripts/UI/UiBuilder; монеты (Features/Wallet) и магазин (Features/Shop) построены по MVP, стартовый капитал задаётся в WalletConfig.asset; спрайты фона FishScene отсутствуют в репозитории.
 
 
 
