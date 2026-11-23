@@ -117,6 +117,16 @@ Assets/AquariumGame/
 │   ├── Gameplay/           сцена FishScene, GameplaySession, GameplayState, GameplayInstaller
 
 │   ├── Fish/               рыба: MVP, фасад, фабрика, реестр, спавн, точки, каталог видов, арт, анимации, префабы, конфиги
+│
+│   ├── FishVitals/         здоровье и голод рыбы: модель, сервис, полоски над рыбой (MVP)
+│
+│   ├── FishBehaviour/      машина состояний рыбы: FishSwimState, FishSeekFoodState, FishDeadState
+│
+│   ├── Feeding/            кормление: кнопка Feed (MVP), режим кормления, корм, FeedingConfig, спрайт корма
+│
+│   ├── FishTap/            монеты за тап по рыбе, FishTapConfig
+│
+│   ├── PointerInput/       тапы по миру: IPointerInputService и обработчики ITapHandler с приоритетом
 
 │   ├── Wallet/             монеты: MVP, WalletConfig, иконка монеты
 
@@ -637,6 +647,12 @@ UI не должен самостоятельно:
 \- Где реализовано движение: FishMovementPresenter (Features/Fish/Scripts/Presenter) двигает рыбу между точками FishWaypoints, точку резервирует FishWaypointsService (выбирается наименее занятая). Рыба не использует ITickable Zenject: FishRegistry (ITickable в Bootstrap) каждый кадр вызывает IFishFacade.Tick(deltaTime), фасад передаёт его в презентер. Разворот к цели выполняет FishView (поворот по Z и flipY при движении влево).
 
 \- Где определяются границы: пока не реализовано.
+
+\- Рыба и её состояния: IFishFacade.Tick сначала обновляет IFishVitalsService (сытость падает каждую секунду, при нуле сытости падает здоровье, при сытости выше порога голода здоровье восстанавливается), затем IFishStateMachine (Features/FishBehaviour). Состояния создаёт FishStateFactory через IInstantiator контекста рыбы. FishSwimState двигает рыбу по точкам и переходит в FishSeekFoodState, если рыба может есть и в аквариуме есть корм; FishSeekFoodState плывёт к ближайшему корму и съедает его; при здоровье 0 любое состояние переходит в FishDeadState: рыба переворачивается, всплывает и через DeadRemoveDelay удаляется через IFishSpawner.Despawn. Параметры здоровья, голода и поведения лежат в FishConfig каждого вида (он реализует IFishConfig, IFishVitalsConfig, IFishBehaviourConfig). Полоски здоровья и сытости рисует FishVitalsView на префабе рыбы, при голоде полоска сытости мигает.
+
+\- Ввод и тапы: PointerInputService (ITickable в Bootstrap) ловит нажатие Pointer, игнорирует нажатия по UI и при паузе (Time.timeScale = 0), переводит точку в мир и по приоритету передаёт её обработчикам ITapHandler, первый вернувший true забирает тап. FeedingTapHandler (приоритет 100) в режиме кормления бросает корм в точку тапа и выключает режим; FishTapHandler (приоритет 0, сцена FishScene) начисляет FishTapConfig.CoinsPerTap монет за тап по живой рыбе.
+
+\- Кормление: кнопка Feed (FeedButtonView и FeedButtonPresenter на объекте Hud сцены FishScene) переключает IFeedingModeModel. Корм создаёт FoodFactory, им владеет FoodService (Bootstrap): гранулы медленно тонут до BottomY и исчезают через Lifetime. FeedingSoInstaller подключён в SceneContext сцены Bootstrap, FishTapSoInstaller — в SceneContext сцены FishScene.
 
 \- Кто владеет загруженными ресурсами: AddressablesAssetProvider (кеш и preload-handle, освобождает в ReleaseAll/Dispose); SceneLoader владеет handle текущей сцены и оверлея; handle префабов рыб хранит AddressablesAssetProvider, FishSpawner владеет только экземплярами. Настройки Addressables создаёт editor-скрипт Features/AssetManagement/Editor/AddressablesSetup.cs (префабы Fish, FishTang, FishGramma с лейблом "preload"; сцены MainMenu, FishScene, Pause).
 
