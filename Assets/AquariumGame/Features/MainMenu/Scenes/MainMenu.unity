@@ -319,7 +319,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a5f739d69db4bd5b5f6ba4a1379dbbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AquariumGame.UI.MainMenuView
-  playLabel: Play
+  skin: {fileID: 11400000, guid: c15f096f687a482aa8666888f9e9e6c2, type: 2}
+  background: {fileID: 21300000, guid: d61ac64049504d5885809a0716054610, type: 3}
+  title: AQUARIUM
+  subtitle: Keep your fish alive!
+  playLabel: PLAY
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

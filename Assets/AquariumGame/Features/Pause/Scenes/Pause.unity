@@ -227,10 +227,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a52b369d3e9241c3a1ca6ceb20f35f9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AquariumGame.UI.PauseView
-  titleLabel: Paused
-  resumeLabel: Resume
-  mainMenuLabel: Main Menu
-  dimColor: {r: 0, g: 0, b: 0, a: 0.6}
+  skin: {fileID: 11400000, guid: c15f096f687a482aa8666888f9e9e6c2, type: 2}
+  titleLabel: PAUSED
+  resumeLabel: RESUME
+  mainMenuLabel: MAIN MENU
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
