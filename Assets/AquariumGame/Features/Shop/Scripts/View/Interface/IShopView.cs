@@ -6,7 +6,7 @@ namespace AquariumGame.Features.Shop.Scripts.View.Interface
     {
         event Action<int> BuyClicked;
 
-        int AddItem(string title, int price);
+        int AddItem(string key, int price);
 
         void SetItemInteractable(int index, bool interactable);
     }

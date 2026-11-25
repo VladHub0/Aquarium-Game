@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 040f9c475350418d959905bc1fc1890b, type: 3}
+  m_Name: UiSkin
+  m_EditorClassIdentifier: Assembly-CSharp::AquariumGame.Features.UI.Scripts.Skin.UiSkin
+  font: {fileID: 12800000, guid: c986d30846f84a25a619348b6234a791, type: 3}
+  textColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineColor: {r: 0.32, g: 0.15, b: 0.05, a: 1}
+  outlineDistance: {x: 3, y: -3}
+  shadowColor: {r: 0, g: 0, b: 0, a: 0.35}
+  shadowDistance: {x: 0, y: -5}
+  titleColor: {r: 1, g: 0.84, b: 0.2, a: 1}
+  hudBar: {fileID: 21300000, guid: 1480e37ad8f44c5bbf43b1219526de89, type: 3}
+  slot: {fileID: 21300000, guid: 8cf1b2f5316a44fb9599d58c69c60d9b, type: 3}
+  emptySlot: {fileID: 21300000, guid: 7010e9c0a8f94134b70e94ef0304572c, type: 3}
+  activeSlot: {fileID: 21300000, guid: 892179da81a34615a0b72e81f999fed1, type: 3}
+  priceTag: {fileID: 21300000, guid: d5dfa6e15b8048f39253fa0599b53ac8, type: 3}
+  coinsDisplay: {fileID: 21300000, guid: f5d8982b3c0c4cdfb903a933b685d249, type: 3}
+  timerDisplay: {fileID: 21300000, guid: a68c10213f764ca38b5d60ffd396f6a0, type: 3}
+  coin: {fileID: 21300000, guid: a56836ccd0e741b1b2b623151f5bf83f, type: 3}
+  coinsTextColor: {r: 0.55, g: 1, b: 0.35, a: 1}
+  timerTextColor: {r: 0.45, g: 0.9, b: 1, a: 1}
+  warningTextColor: {r: 1, g: 0.35, b: 0.3, a: 1}
+  disabledTint: {r: 0.55, g: 0.55, b: 0.62, a: 1}
+  primaryButton: {fileID: 21300000, guid: 21da42a7eb7b4f62a243f9a283b278ef, type: 3}
+  secondaryButton: {fileID: 21300000, guid: dd697cd76ec141bf811ca9433ae885cd, type: 3}
+  accentButton: {fileID: 21300000, guid: 72a4d0b6c0624e2e9d1a21b3eba1c65d, type: 3}
+  panel: {fileID: 21300000, guid: 2b0e44305c8d40b698a84b7ef49c5c98, type: 3}
+  dimColor: {r: 0.05, g: 0.02, b: 0.15, a: 0.65}

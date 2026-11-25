@@ -183,10 +183,10 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -100
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.062745094, g: 0.5051295, b: 0.7058824, a: 1}
+  m_Sprite: {fileID: 21300000, guid: e16d9bc1e8c5437cbbacce5a364f6d27, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -206,7 +206,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 20, y: 10, z: 1}
+  m_LocalScale: {x: 1.02, y: 1.02, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -303,98 +303,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1038579290
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1038579292}
-  - component: {fileID: 1038579291}
-  m_Layer: 0
-  m_Name: Aquarium
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!212 &1038579291
-SpriteRenderer:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1038579290}
-  m_Enabled: 1
-  m_CastShadows: 0
-  m_ReceiveShadows: 0
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 0
-  m_RayTraceProcedural: 0
-  m_RayTracingAccelStructBuildFlagsOverride: 0
-  m_RayTracingAccelStructBuildFlags: 1
-  m_SmallMeshCulling: 1
-  m_ForceMeshLod: -1
-  m_MeshLodSelectionBias: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 0
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_MaskInteraction: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.8553459, g: 0.57292026, b: 0.57292026, a: 1}
-  m_FlipX: 0
-  m_FlipY: 0
-  m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
-  m_AdaptiveModeThreshold: 0.5
-  m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
-  m_SpriteSortPoint: 0
-  m_BlendShapeWeights: []
---- !u!4 &1038579292
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1038579290}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 10, y: 5, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1543414233
 GameObject:
   m_ObjectHideFlags: 0
@@ -431,6 +339,7 @@ MonoBehaviour:
   - {fileID: 800000006}
   - {fileID: 800000008}
   - {fileID: 800000010}
+  - {fileID: 800000012}
   _installerPrefabs: []
   _autoRun: 1
   OnPreInstall:
@@ -1184,6 +1093,8 @@ GameObject:
   - component: {fileID: 800000008}
   - component: {fileID: 800000009}
   - component: {fileID: 800000010}
+  - component: {fileID: 800000011}
+  - component: {fileID: 800000012}
   m_Layer: 5
   m_Name: Hud
   m_TagString: Untagged
@@ -1218,9 +1129,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f94c079101194c84b11d9329c49e0d73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AquariumGame.Features.Wallet.Scripts.View.CoinsView
-  coinSprite: {fileID: 21300000, guid: a56836ccd0e741b1b2b623151f5bf83f, type: 3}
-  panelColor: {r: 0, g: 0, b: 0, a: 0.45}
-  textColor: {r: 1, g: 0.86, b: 0.25, a: 1}
+  skin: {fileID: 11400000, guid: c15f096f687a482aa8666888f9e9e6c2, type: 2}
 --- !u!114 &800000004
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1233,9 +1142,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f29015844eed4f05b125a0d96ca3ea54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AquariumGame.Features.Shop.Scripts.View.ShopView
-  coinSprite: {fileID: 21300000, guid: a56836ccd0e741b1b2b623151f5bf83f, type: 3}
-  labelColor: {r: 0.15, g: 0.15, b: 0.2, a: 1}
-  coinColor: {r: 1, g: 0.86, b: 0.25, a: 1}
+  skin: {fileID: 11400000, guid: c15f096f687a482aa8666888f9e9e6c2, type: 2}
+  icons:
+  - key: Fish
+    icon: {fileID: 21300000, guid: 3181cba1fdf84298bcd4bcb7d70c8335, type: 3}
+  - key: FishTang
+    icon: {fileID: 21300000, guid: 7440083293db4388957e8f34f58dd41c, type: 3}
+  - key: FishGramma
+    icon: {fileID: 21300000, guid: 14ca328e08974d9fa7c5c55abd6b8584, type: 3}
 --- !u!114 &800000005
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1272,12 +1186,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b94e2b8138284cfcb174dc7cd6a4e640, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AquariumGame.Features.Feeding.Scripts.View.FeedButtonView
+  skin: {fileID: 11400000, guid: c15f096f687a482aa8666888f9e9e6c2, type: 2}
   foodSprite: {fileID: 21300000, guid: 595b71974108428cb9b551bf8ff968a6, type: 3}
-  idleLabel: Feed
-  activeLabel: Tap aquarium
-  idleColor: {r: 1, g: 1, b: 1, a: 1}
-  activeColor: {r: 1, g: 0.8, b: 0.35, a: 1}
-  labelColor: {r: 0.15, g: 0.15, b: 0.2, a: 1}
+  idleLabel: FEED
+  activeLabel: TAP!
 --- !u!114 &800000008
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1302,9 +1214,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88aab61ee4fa47d19c0304cd334c416e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AquariumGame.Features.RoundTimer.Scripts.View.RoundTimerView
-  panelColor: {r: 0, g: 0, b: 0, a: 0.45}
-  textColor: {r: 1, g: 1, b: 1, a: 1}
-  warningColor: {r: 1, g: 0.35, b: 0.3, a: 1}
+  skin: {fileID: 11400000, guid: c15f096f687a482aa8666888f9e9e6c2, type: 2}
+  label: TIME
 --- !u!114 &800000010
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1317,13 +1228,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97b04bcffa4c4d85bd4315a2ecd06061, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AquariumGame.Features.RoundTimer.Scripts.Installers.RoundTimerViewInstaller
+--- !u!114 &800000011
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 800000001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e598ce2088f4f92b263bf76ac525145, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AquariumGame.Features.Hud.Scripts.View.HudBarView
+  skin: {fileID: 11400000, guid: c15f096f687a482aa8666888f9e9e6c2, type: 2}
+  menuLabel: MENU
+--- !u!114 &800000012
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 800000001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28f9f55a62384f9198dd987144b5aafb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AquariumGame.Features.Hud.Scripts.Installers.HudInstaller
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 343794988}
   - {fileID: 964287}
-  - {fileID: 1038579292}
   - {fileID: 1543414235}
   - {fileID: 700000002}
   - {fileID: 800000002}

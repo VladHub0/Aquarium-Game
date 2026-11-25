@@ -31,7 +31,7 @@ namespace AquariumGame.Features.Shop.Scripts.Presenter
             _items = FishCatalog.All;
 
             foreach (var species in _items)
-                _view.AddItem(species.DisplayName, species.Price);
+                _view.AddItem(species.Key, species.Price);
 
             _view.BuyClicked += OnBuyClicked;
             _wallet.Changed += OnCoinsChanged;
