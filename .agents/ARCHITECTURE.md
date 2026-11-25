@@ -136,9 +136,11 @@ Assets/AquariumGame/
 
 │   ├── Wallet/             монеты: MVP, WalletConfig, иконка монеты
 
-│   ├── Shop/               магазин рыб: MVP
+│   ├── Shop/               магазин рыб: MVP, иконки рыб для слотов HUD
 
-│   └── UI/                 UiBuilder — общие помощники построения UI
+│   ├── Hud/                верхняя панель HUD: HudBarView, HudBarPresenter, кнопка MENU (пауза), HudInstaller
+│
+│   └── UI/                 общий казуальный стиль: UiSkin (шрифт, спрайты, цвета), UiBuilder, эффекты UiPressScale/UiPulse/UiPunch, текстуры Art, шрифт Lilita One
 
 ├── Resources/              DOTweenSettings (требование DOTween)
 
@@ -664,11 +666,13 @@ UI не должен самостоятельно:
 
 \- Победа: RoundTimerService (ITickable в Bootstrap) сбрасывает таймер при старте и конце сессии и уменьшает его, пока сессия активна (на паузе Time.timeScale = 0, поэтому таймер стоит). Когда время вышло и в IFishRegistry есть живая рыба, вызывается IGameFlowService.RequestVictory; GameplayState переходит в VictoryState, тот завершает сессию и переводит игру в MainMenuState. Длительность раунда и порог красного цвета задаются в RoundTimerConfig.asset, RoundTimerSoInstaller подключён в SceneContext сцены Bootstrap, таймер в HUD собирают RoundTimerView и RoundTimerPresenter на объекте Hud сцены FishScene.
 
+\- Интерфейс: казуальный стиль в духе match-3. Все View (HudBarView, CoinsView, ShopView, FeedButtonView, RoundTimerView, MainMenuView, PauseView) получают общий UiSkin.asset (Features/UI/Configs) через сериализованное поле и строят UI кодом через UiBuilder. HUD — золотая панель сверху: слот корма, слоты рыб магазина с ценой, пустые слоты, таймер, монеты и кнопка MENU. HudBarView, HudBarPresenter и HudInstaller висят на объекте Hud сцены FishScene, кнопка MENU вызывает IGameFlowService.RequestTogglePause. Текстуры UI нарезаются 9-slice через spriteBorder в .meta.
+
 \- Кто владеет загруженными ресурсами: AddressablesAssetProvider (кеш и preload-handle, освобождает в ReleaseAll/Dispose); SceneLoader владеет handle текущей сцены и оверлея; handle префабов рыб хранит AddressablesAssetProvider, FishSpawner владеет только экземплярами. Настройки Addressables создаёт editor-скрипт Features/AssetManagement/Editor/AddressablesSetup.cs (префабы Fish, FishTang, FishGramma с лейблом "preload"; сцены MainMenu, FishScene, Pause).
 
 \- Какие тесты уже существуют: нет.
 
-\- Известные ограничения: игра целиком запускается только со сцены Bootstrap; UI (MainMenuView, PauseView, CoinsView, ShopView) собирается кодом, общие помощники в Features/UI/Scripts/UiBuilder; монеты (Features/Wallet) и магазин (Features/Shop) построены по MVP, стартовый капитал задаётся в WalletConfig.asset; спрайты фона FishScene отсутствуют в репозитории.
+\- Известные ограничения: игра целиком запускается только со сцены Bootstrap; UI (MainMenuView, PauseView, CoinsView, ShopView) собирается кодом, общие помощники в Features/UI/Scripts/UiBuilder; монеты (Features/Wallet) и магазин (Features/Shop) построены по MVP, стартовый капитал задаётся в WalletConfig.asset; фон FishScene лежит в Features/Gameplay/Art, фон меню — в Features/MainMenu/Art.
 
 
 

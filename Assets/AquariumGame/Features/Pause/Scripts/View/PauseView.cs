@@ -1,7 +1,8 @@
 using AquariumGame.Features.StateMachine.Scripts.GameFlow.Interface;
+using AquariumGame.Features.UI.Scripts;
+using AquariumGame.Features.UI.Scripts.Effects;
+using AquariumGame.Features.UI.Scripts.Skin;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.InputSystem.UI;
 using UnityEngine.UI;
 using Zenject;
 
@@ -9,10 +10,12 @@ namespace AquariumGame.Features.Pause.Scripts.View
 {
     public sealed class PauseView : MonoBehaviour
     {
-        [SerializeField] private string titleLabel = "Paused";
-        [SerializeField] private string resumeLabel = "Resume";
-        [SerializeField] private string mainMenuLabel = "Main Menu";
-        [SerializeField] private Color dimColor = new Color(0f, 0f, 0f, 0.6f);
+        [SerializeField] private UiSkin skin;
+        [SerializeField] private string titleLabel = "PAUSED";
+        [SerializeField] private string resumeLabel = "RESUME";
+        [SerializeField] private string mainMenuLabel = "MAIN MENU";
+        [SerializeField] private Vector2 panelSize = new Vector2(640f, 600f);
+        [SerializeField] private Vector2 buttonSize = new Vector2(420f, 120f);
 
         private IGameFlowService _gameFlow;
         private Button _resumeButton;
@@ -23,17 +26,33 @@ namespace AquariumGame.Features.Pause.Scripts.View
 
         private void Start()
         {
-            EnsureEventSystem();
+            UiBuilder.EnsureEventSystem(transform);
 
-            var canvas = CreateCanvas();
-            CreateDim(canvas);
-            CreateTitle(canvas);
+            var canvas = UiBuilder.CreateCanvas(transform, "PauseCanvas", 100);
 
-            _resumeButton = CreateButton(canvas, "ResumeButton", resumeLabel, new Vector2(0f, 0f));
-            _mainMenuButton = CreateButton(canvas, "MainMenuButton", mainMenuLabel, new Vector2(0f, -120f));
+            var dim = UiBuilder.CreateImage("Dim", canvas, null, skin != null ? skin.DimColor : new Color(0f, 0f, 0f, 0.6f));
+            dim.raycastTarget = true;
+            UiBuilder.Stretch(dim.rectTransform, Vector2.zero, Vector2.zero);
+
+            var panel = UiBuilder.CreateImage("Panel", canvas, skin != null ? skin.Panel : null, new Color(0.7f, 0.35f, 0.85f, 1f));
+            panel.raycastTarget = true;
+            UiBuilder.Place(panel.rectTransform, new Vector2(0.5f, 0.5f), Vector2.zero, panelSize);
+            UiBuilder.FitSlicedBorders(panel);
+
+            var title = UiBuilder.CreateLabel("Title", panel.rectTransform, skin, 104, TextAnchor.MiddleCenter, skin != null ? skin.TitleColor : Color.yellow);
+            UiBuilder.Place(title.rectTransform, new Vector2(0.5f, 1f), new Vector2(0f, -110f), new Vector2(panelSize.x, 140f));
+            title.text = titleLabel;
+
+            foreach (var outline in title.GetComponents<Outline>())
+                outline.effectDistance = new Vector2(5f, -5f);
+
+            _resumeButton = CreateButton(panel.rectTransform, "ResumeButton", skin != null ? skin.PrimaryButton : null, resumeLabel, new Vector2(0f, -10f));
+            _mainMenuButton = CreateButton(panel.rectTransform, "MainMenuButton", skin != null ? skin.SecondaryButton : null, mainMenuLabel, new Vector2(0f, -170f));
 
             _resumeButton.onClick.AddListener(OnResumeClicked);
             _mainMenuButton.onClick.AddListener(OnMainMenuClicked);
+
+            panel.gameObject.AddComponent<UiPunch>().Play();
         }
 
         private void OnDestroy()
@@ -78,80 +97,14 @@ namespace AquariumGame.Features.Pause.Scripts.View
             _mainMenuButton.interactable = value;
         }
 
-        private void EnsureEventSystem()
+        private Button CreateButton(Transform parent, string name, Sprite sprite, string label, Vector2 position)
         {
-            if (FindAnyObjectByType<EventSystem>() != null)
-                return;
-
-            var eventSystem = new GameObject("EventSystem", typeof(EventSystem), typeof(InputSystemUIInputModule));
-            eventSystem.transform.SetParent(transform, false);
-        }
-
-        private Transform CreateCanvas()
-        {
-            var canvasGo = new GameObject("PauseCanvas", typeof(Canvas), typeof(CanvasScaler), typeof(GraphicRaycaster));
-            canvasGo.transform.SetParent(transform, false);
-
-            var canvas = canvasGo.GetComponent<Canvas>();
-            canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-            canvas.sortingOrder = 100;
-
-            var scaler = canvasGo.GetComponent<CanvasScaler>();
-            scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
-            scaler.referenceResolution = new Vector2(1920f, 1080f);
-
-            return canvasGo.transform;
-        }
-
-        private void CreateDim(Transform canvas)
-        {
-            var dimGo = new GameObject("Dim", typeof(RectTransform), typeof(Image));
-            dimGo.transform.SetParent(canvas, false);
-
-            var rect = (RectTransform)dimGo.transform;
-            rect.anchorMin = Vector2.zero;
-            rect.anchorMax = Vector2.one;
-            rect.offsetMin = Vector2.zero;
-            rect.offsetMax = Vector2.zero;
-
-            dimGo.GetComponent<Image>().color = dimColor;
-        }
-
-        private void CreateTitle(Transform canvas)
-        {
-            var titleGo = new GameObject("Title", typeof(RectTransform), typeof(Text));
-            titleGo.transform.SetParent(canvas, false);
-
-            var rect = (RectTransform)titleGo.transform;
-            rect.sizeDelta = new Vector2(800f, 140f);
-            rect.anchoredPosition = new Vector2(0f, 180f);
-
-            var text = titleGo.GetComponent<Text>();
-            text.font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
-            text.text = titleLabel;
-            text.fontSize = 96;
-            text.alignment = TextAnchor.MiddleCenter;
-            text.color = Color.white;
-        }
-
-        private static Button CreateButton(Transform canvas, string name, string label, Vector2 position)
-        {
-            var buttonGo = DefaultControls.CreateButton(new DefaultControls.Resources());
-            buttonGo.name = name;
-            buttonGo.transform.SetParent(canvas, false);
-
-            var rect = (RectTransform)buttonGo.transform;
-            rect.sizeDelta = new Vector2(360f, 90f);
-            rect.anchoredPosition = position;
-
-            var text = buttonGo.GetComponentInChildren<Text>();
-            if (text != null)
-            {
-                text.text = label;
-                text.fontSize = 36;
-            }
-
-            return buttonGo.GetComponent<Button>();
+            var button = UiBuilder.CreateButton(name, parent, skin, sprite, new Color(0.35f, 0.8f, 0.2f, 1f));
+            var image = (Image)button.targetGraphic;
+            UiBuilder.Place(image.rectTransform, new Vector2(0.5f, 0.5f), position, buttonSize);
+            UiBuilder.FitSlicedBorders(image);
+            UiBuilder.AddButtonLabel(button, skin, label, 58);
+            return button;
         }
     }
 }
